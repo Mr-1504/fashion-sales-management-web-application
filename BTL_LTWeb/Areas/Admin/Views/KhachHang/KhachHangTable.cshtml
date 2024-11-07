@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TKhachHang>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Tên khách hàng
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Ghi chú
+            </th>
+            <th>
+                Chức năng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert alert-primary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenKhachHang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    <a asp-action="ChiTietKhachHang" asp-route-maKH="@item.MaKhachHang">Chi tiết</a> 
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

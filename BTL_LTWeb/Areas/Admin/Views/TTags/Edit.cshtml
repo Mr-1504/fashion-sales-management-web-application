@@ -1,0 +1,44 @@
+﻿@model BTL_LTWeb.Models.TTag
+
+@{
+    ViewData["Title"] = "Sửa Bộ sưu tập";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Edit</h1>
+
+<h4>TTag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TagId" />
+            <div class="form-group">
+                <label asp-for="TagName" class="control-label"></label>
+                <input asp-for="TagName" class="form-control" />
+                <span asp-validation-for="TagName" class="text-danger"></span>
+            </div>
+            <div class="form-group" >
+                <label asp-for="TagImage" class="control-label"></label>
+                <input type="hidden" asp-for="TagImage" class="form-control" />
+                <span asp-validation-for="TagImage" class="text-danger"></span>
+            </div>
+            <div class="form-group row mt-3">
+                <div class="col-md-12">
+                    <label for="file">Chọn ảnh:</label>
+                    <input type="file" name="file" class="form-control" />
+                </div>
+                <span asp-validation-for="TagImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Quay lại</a>
+</div>
+

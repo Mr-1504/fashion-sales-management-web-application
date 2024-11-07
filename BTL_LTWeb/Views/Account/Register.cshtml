@@ -1,0 +1,134 @@
+﻿@model BTL_LTWeb.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Họ tên</label>
+        <input asp-for="Name" class="form-control" id="Name" aria-describedby="nameHelp">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DateOfBirth" class="form-label">Ngày sinh</label>
+        <input asp-for="DateOfBirth" class="form-control" id="DateOfBirth" type="date">
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-md-6">
+            <label asp-for="Province" class="form-label">Tỉnh/Thành phố<span class="text-danger">*</span></label>
+            <select asp-for="Province" id="c_country" class="form-control">
+                <option value="">Chọn Tỉnh/Thành phố</option>
+            </select>
+            <span asp-validation-for="Province" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="District" class="form-label">Quận/Huyện<span class="text-danger">*</span></label>
+            <select asp-for="District" id="c_district" class="form-control">
+                <option value="">Chọn Quận/Huyện</option>
+            </select>
+            <span asp-validation-for="District" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StreetAddress" class="form-label">Số nhà, Ngõ, Xã/Phường</label>
+        <input asp-for="StreetAddress" class="form-control" id="Address">
+        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
+        <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber">
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" id="Email" type="email">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="Password" class="form-label">Mật khẩu</label>
+        <input asp-for="Password" class="form-control" id="Password" type="password">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
+        <input asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" type="password">
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div>
+        <span class="text-danger">
+            @Html.ValidationSummary(true) <!-- Hiển thị thông báo lỗi chung -->
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Đăng ký</button>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <p class="fs-4 mb-0 fw-bold">Đã có tài khoản?</p>
+        <a class="text-primary fw-bold ms-2" href="@Url.Action("Login", "Account")">Đăng nhập</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let code = [];
+        sessionStorage.setItem("countdown", 30);
+
+        function loadProvinces(selectId, districtSelectId) {
+            $.get('https://provinces.open-api.vn/api/p/', function (data) {
+                let provinceSelect = $('#' + selectId);
+                data.forEach(province => {
+                    provinceSelect.append($('<option>', {
+                        value: province.name,
+                        text: province.name
+                    }));
+                    code.push(province.code);
+                });
+
+                provinceSelect.on('change', function () {
+                    let selectedIndex = provinceSelect[0].selectedIndex;
+                    if (selectedIndex == 0) {
+                        let districtSelect = $('#' + districtSelectId);
+                        districtSelect.empty().append($('<option>', {
+                            text: 'Chọn Quận/Huyện'
+                        }));
+                    } else {
+                        loadDistricts(code[selectedIndex - 1], districtSelectId);
+                    }
+                });
+            }).fail(function () {
+                console.error('Error loading provinces');
+            });
+        }
+
+        function loadDistricts(provinceCode, districtSelectId) {
+            $.get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`, function (data) {
+                let districtSelect = $('#' + districtSelectId);
+                districtSelect.empty();
+                if (data.districts) {
+                    data.districts.forEach(district => {
+                        districtSelect.append($('<option>', {
+                            value: district.name,
+                            text: district.name
+                        }));
+                    });
+                }
+            }).fail(function () {
+                console.error('Error loading districts');
+            });
+        }
+
+        $(document).ready(function () {
+            loadProvinces('c_country', 'c_district');
+        });
+    </script>
+
+}

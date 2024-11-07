@@ -1,0 +1,121 @@
+﻿@model BTL_LTWeb.ViewModels.ChiTietSanPhamViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var logMessage = TempData["LogChiTiet"] as string;
+    if (!string.IsNullOrEmpty(logMessage))
+    {
+        <div class="alert alert-success">
+            @logMessage
+        </div>
+    }
+}
+<h1>Chi Tiết Sản Phẩm</h1>
+
+<div>
+    <h4>Danh mục</h4>
+    <hr />
+    <dl class="row alert alert-info text-black">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.TenSp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.TenSp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.ChatLieu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.ChatLieu)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.LoaiDt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.LoaiDt)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.HangSx)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.HangSx)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.ThoiGianBaoHanh)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.ThoiGianBaoHanh)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.GioiThieuSp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.GioiThieuSp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.AnhDaiDien)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.AnhDaiDien)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sp.Gia)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sp.Gia)
+        </dd>
+        <table class="table text-black">
+            <thead>
+                <tr>
+                    <th>
+                        Kích thước
+                    </th>
+                    <th>
+                        Màu Sắc
+                    </th>
+                    <th>
+                        Ảnh đại diện
+                    </th>
+                    <th>
+                        Số lượng tồn
+                    </th>
+                    <th>
+                        Chức năng
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.chiTietSanPhams)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KichThuoc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MauSac)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AnhDaiDien)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Slton)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-MaChiTietSp="@item.MaChiTietSp">Sửa</a> |
+                            <a asp-action="Details" asp-route-MaChiTietSp="@item.MaChiTietSp">Chi Tiết</a> |
+                            <a asp-action="XoaChiTiet" asp-route-MaChiTietSp="@item.MaChiTietSp">Xoá</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </dl>
+</div>
+<div>
+    <button class="btn btn-info"><a class="text-light" asp-action="Suasanpham" asp-route-MaSP="@Model.Sp.MaSp">Sửa sản phẩm</a></button>     |
+    <button class="btn btn-info"><a class="text-light" asp-action="danhmucsanpham">Quay về danh mục sản phẩm</a></button>   |
+    <button class="btn btn-info"><a class="text-light" asp-action="ThemChiTiet" asp-route-MaSP="@Model.Sp.MaSp">Thêm chi tiết sản phẩm</a></button>
+</div>

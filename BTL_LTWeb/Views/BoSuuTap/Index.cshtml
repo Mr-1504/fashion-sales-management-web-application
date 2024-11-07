@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Bộ sưu tập";
+    Layout = "~/Views/Shared/BoSuuTapLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<BTL_LTWeb.Models.TDanhMucSp>
+
+<div class="site-section block-3 site-blocks-2 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 site-section-heading text-center pt-4">
+                <h2>Danh mục sản phẩm theo bộ sưu tập</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nonloop-block-3 owl-carousel">
+
+                    @foreach (var m in Model)
+                    {
+                        <div class="item">
+                            <div class="block-4 text-center">
+                                <figure class="block-4-image">
+                                    <img src="~/images/@($"{m.AnhDaiDien}")" alt="Image placeholder" class="img-fluid">
+                                </figure>
+                                <div class="block-4-text p-4">
+                                    <h3><a href="#">@m.TenSp</a></h3>
+                                    <p class="text-primary font-weight-bold">$@m.Gia</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,57 @@
+﻿@model BTL_LTWeb.Models.TNhanVien  
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers  
+@{  
+   ViewData["Title"] = "Suanhanvien";  
+   Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";  
+}  
+<div class="ms-2 mx-2">  
+   <h1>Sửa thông tin</h1>  
+   <div asp-validation-summary="ModelOnly" class="text-danger"></div>  
+   <form asp-controller="NhanVien" asp-action="Suanhanvien" asp-route-id="@Model.MaNhanVien" method="post" class="mt-3">
+       <input type ="hidden" asp-for="MaNhanVien" />
+       <input type ="hidden" asp-for="Email"/>
+       <div style="margin-top: 7px" class="form-group row mt-3">  
+           <label asp-for="TenNhanVien" class="text-black form-label">Tên nhân viên <span class="text-danger">*</span></label>  
+           <div class="col-md-12">  
+               <input asp-for="TenNhanVien" class="form-control" placeholder="Tên nhân viên">  
+               <span asp-validation-for="TenNhanVien" class="text-danger"></span>  
+           </div>  
+       </div>  
+        @* <div style="margin-top: 7px" class="form-group row mt-3">  
+           <label asp-for="Email" class="text-black form-label">Email <span class="text-danger">*</span></label>  
+           <div class="col-md-12">  
+               <input asp-for="Email" class="form-control" placeholder="Email">  
+               <span asp-validation-for="Email" class="text-danger"></span>  
+           </div>  
+       </div>   *@
+       <div style="margin-top: 7px" class="form-group row mt-3">  
+           <label asp-for="NgaySinh" class="text-black form-label">Ngày sinh </label>  
+           <div class="col-md-12">  
+               <input asp-for="NgaySinh" class="form-control">  
+               <span asp-validation-for="NgaySinh" class="text-danger"></span>  
+           </div>  
+       </div>  
+       <div style="margin-top: 7px" class="form-group row mt-3">  
+           <label asp-for="ChucVu" class="text-black form-label">Chức vụ </label>  
+           <div class="col-md-12">  
+               <input asp-for="ChucVu" class="form-control" placeholder="Chức vụ">  
+               <span asp-validation-for="ChucVu" class="text-danger"></span>  
+           </div>  
+       </div>  
+       <div style="margin-top: 7px" class="form-group row mt-3">  
+           <label asp-for="GhiChu" class="text-black form-label">Ghi chú </label>  
+           <div class="col-md-12">  
+               <input asp-for="GhiChu" class="form-control" placeholder="Ghi chú">  
+               <span asp-validation-for="GhiChu" class="text-danger"></span>  
+           </div>  
+       </div>  
+       <div style="margin-top: 10px" class=" form-group row mt-3">  
+           <div class="col-md-12">  
+               <button type="submit" class="btn btn-primary">Lưu</button>  
+           </div>  
+       </div>  
+   </form>  
+</div>  
+<div class="col-lg-12 mt-3">  
+   <a class="btn btn-primary" asp-action="danhsachnhanvien" asp-controller="NhanVien">Trở lại</a>  
+</div>

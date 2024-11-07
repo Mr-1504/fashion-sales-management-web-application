@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Sanphamtheogia";
+    Layout = "~/Views/Shared/ShopLayout.cshtml";
+}
+
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<BTL_LTWeb.Models.TDanhMucSp>
+<div class="row mb-5">
+    @foreach (var m in Model)
+    {
+        @await Html.PartialAsync("_ProductPartial", m)
+    }
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Sanphamtheogia", new { page = page, Gia = ViewBag.Gia }),
+            new X.PagedList.Mvc.Core.PagedListRenderOptions()
+        {
+            LiElementClasses = new List<String> { "page-item" },
+            PageClasses = new List<String> { "page-link" }
+        })
+

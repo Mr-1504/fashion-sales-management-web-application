@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<BTL_LTWeb.Models.TDanhMucSp>
+@foreach (var m in Model)
+{
+    <div class="item">
+        <div class="block-4 text-center">
+            <figure class="block-4-image">
+                <img src="~/images/@($"{m.AnhDaiDien}")" alt="Image placeholder" class="img-fluid">
+            </figure>
+            <div class="block-4-text p-4">
+                <h3><a href="#">@m.TenSp</a></h3>
+                <p class="text-primary font-weight-bold">$@m.Gia</p>
+            </div>
+        </div>
+    </div>
+}
+

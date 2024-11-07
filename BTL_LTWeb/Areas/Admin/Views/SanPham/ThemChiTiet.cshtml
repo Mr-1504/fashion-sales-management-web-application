@@ -1,0 +1,60 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BTL_LTWeb.Models.TChiTietSanPham
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Themsanpham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm Chi Tiết Sản Phẩm</h1>
+
+<hr />
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="p-3 p-lg-5 border">
+    <form asp-action="ThemChiTiet" method="post">
+        <div class="form-group row mt-3">
+            <div class="col-md-12 text-black ">
+                <label asp-for="MaSp" class="control-label">Tên Sản phẩm</label>
+                <select asp-for="MaSp" class="form-control" >
+                    <option value="@ViewBag.MaSP">@ViewBag.TenSP</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <div class="col-md-6">
+                <label asp-for="KichThuoc" class="text-black form-label">Kích thước<span class="text-danger">*</span></label>
+                <input asp-for="KichThuoc" class="form-control">
+                <span asp-validation-for="KichThuoc" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="MauSac" class="text-black form-label">Màu sắc <span class="text-danger">*</span></label>
+                <input asp-for="MauSac" class="form-control">
+                <span asp-validation-for="MauSac" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <div class="col-md-12">
+                <label asp-for="AnhDaiDien" class="text-black form-label">Ảnh đại diện <span class="text-danger">*</span></label>
+                <input asp-for="AnhDaiDien" class="form-control" placeholder="">
+                <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <div class="col-md-12">
+                <label asp-for="Slton" class="text-black form-label">Số lượng tồn<span class="text-danger">*</span></label>
+                <input asp-for="Slton" class="form-control">
+                <span asp-validation-for="Slton" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+            <div class="col-lg-12">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Thêm</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="col-lg-12">
+    <a class="btn btn-primary" asp-action="ChiTiet" asp-route-MaSP="@ViewBag.MaSP">Quay về chi tiết sản phẩm @ViewBag.TenSP</a>
+</div>

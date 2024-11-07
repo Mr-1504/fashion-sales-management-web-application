@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.THoaDonBan>
+@{
+    ViewData["Title"] = "Danhsachhoadonkhachhang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="row">
+    <p>Các hoá đơn của khách hàng: @ViewBag.KhachHang.TenKhachHang</p>
+   @*  <form asp-controller="KhachHang" asp-action="" method="get" class="site-block-top-search d-flex">
+        <input type="text" name="TenKhachHang" class="form-control border-1" placeholder="Search">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form> *@
+    <p></p>
+<div class="alert alert-warning" id="invoiceTable">
+        @await Html.PartialAsync("HoaDonKhachHangPartial", Model)
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('body').on('click', 'li.page-item', function (e) {
+            e.preventDefault();
+            var page = $(this).data("page");
+            var maKH = @ViewBag.KhachHang.MaKhachHang; 
+
+            $.ajax({
+                url: '@Url.Action("ChiTietKhachHang")', 
+                type: 'GET',
+                data: { maKH: maKH, page: page }, 
+                success: function (response) {
+                    $('#invoiceTable').html(response); 
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+    </script>
+}

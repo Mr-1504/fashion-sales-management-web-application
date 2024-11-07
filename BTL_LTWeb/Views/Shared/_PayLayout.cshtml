@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BTL_LTWeb.styles.css" asp-append-version="true" />
+
+    <title>BeA Fashion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="~/ResourceTemplale/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/aos.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/style.css">
+</head>
+<body>
+
+    <div class="site-wrap">
+        @await Html.PartialAsync("_HeaderPartial");
+            @RenderBody()
+        @await Html.PartialAsync("_FooterPartial")
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/ResourceTemplale/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-ui.js"></script>
+    <script src="~/ResourceTemplale/js/popper.min.js"></script>
+    <script src="~/ResourceTemplale/js/bootstrap.min.js"></script>
+    <script src="~/ResourceTemplale/js/owl.carousel.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ResourceTemplale/js/aos.js"></script>
+    <script src="~/ResourceTemplale/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

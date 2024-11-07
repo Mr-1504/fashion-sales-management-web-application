@@ -1,0 +1,73 @@
+﻿@model BTL_LTWeb.Models.TMaGiamGia
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Thêm Mã giảm giá";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="ms-2 mx-2">
+    <h1>Thêm Mã Giảm Giá</h1>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-controller="GiamGia" asp-action="ThemMaGiamGia" method="post" class="mt-3">
+        <div class="form-group row mt-3">
+            <label asp-for="Code" class="text-black form-label">Code <span class="text-danger">*</span></label>
+            <div class="col-md-12">
+                <input asp-for="Code" class="form-control" placeholder="Code">
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group row mt-3">
+            <label asp-for="TiLeGiam" class="text-black form-label">Giá Trị Giảm (%)</label>
+            <div class="col-md-12">
+                <input asp-for="TiLeGiam" class="form-control" placeholder="Giá trị giảm">
+                <span asp-validation-for="TiLeGiam" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label asp-for="Mota" class="text-black form-label">Mô tả</label>
+            <div class="col-md-12">
+                <input asp-for="Mota" class="form-control" placeholder="Mô tả">
+                <span asp-validation-for="Mota" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
+            <label asp-for="NgayBatDau" class="text-black form-label">Ngày bắt đầu</label>
+            <div class="col-md-12">
+                <input asp-for="NgayBatDau" class="form-control" type="date">
+                <span asp-validation-for="NgayBatDau" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label asp-for="NgayKetThuc" class="text-black form-label">Ngày kết thúc</label>
+            <div class="col-md-12">
+                <input asp-for="NgayKetThuc" class="form-control" type="date">
+                <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
+            </div>
+        </div>
+
+       @*  <div style="margin-top: 7px" class="form-group row mt-3">
+            <label asp-for="TrangThai" class="text-black form-label">Trạng Thái</label>
+            <div class="col-md-12">
+                <input asp-for="TrangThai" class="form-control" readonly>
+                <span class="text-muted">Trạng thái sẽ được xác định tự động dựa trên ngày bắt đầu và kết thúc.</span>
+            </div>
+        </div> *@
+
+
+        <div class="form-group row mt-3">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="col-lg-12 mt-3">
+    <a class="btn btn-primary" asp-action="DanhsachMaGiamGia">Trở lại</a>
+</div>
+
+

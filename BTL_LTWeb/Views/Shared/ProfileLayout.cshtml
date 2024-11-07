@@ -1,0 +1,96 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản</title>
+</head>
+<link rel="stylesheet" href="~/ResourceTemplale/Profile/style.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/BTL_LTWeb.styles.css" asp-append-version="true" />
+
+<title>BeA Store</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="~/ResourceTemplale/fonts/icomoon/style.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/magnific-popup.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/jquery-ui.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/owl.carousel.min.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/aos.css">
+<link rel="stylesheet" href="~/ResourceTemplale/css/style.css">
+<link rel="stylesheet" href="~/css/ProfileCustomer/ProfileCustomer.css">
+
+<body>
+    @await Html.PartialAsync("_HeaderPartial");
+    
+    <div class="container main-container" style="background-color: white; max-width: 900px; margin: auto;">
+        <div class="row">
+            <div class="col-lg-4 col-md-5 col-sm-12 pb-5">
+                <!-- Account Sidebar -->
+                @await Component.InvokeAsync("CustomerInfo")
+                <div class="wizard">
+                    <nav class="list-group list-group-flush">
+                        <a class="list-group-item active"   id="suathongtin" href="#">
+                            Thông tin tài khoản                            
+                        </a>
+
+                        <a class="list-group-item" id="change" href="#">
+                            Đổi mật khẩu
+                        </a>
+                        <a class="list-group-item"  id="donhang" href="#">
+                            Đơn hàng
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7 col-sm-12 pb-5" style="background-color: white;" id="change-password">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/ResourceTemplale/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-ui.js"></script>
+    <script src="~/ResourceTemplale/js/popper.min.js"></script>
+    <script src="~/ResourceTemplale/js/bootstrap.min.js"></script>
+    <script src="~/ResourceTemplale/js/owl.carousel.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ResourceTemplale/js/aos.js"></script>
+    <script src="~/js/ProfileCustomer.js"></script>"
+    <script>
+        $(document).ready(function () {
+            $('a#logout').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/acc/logout',
+                    type: 'POST',
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+    @await Html.PartialAsync("_FooterPartial")
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BeA Fashion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="~/ResourceTemplale/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/aos.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/style.css">
+    <link rel="stylesheet" href="~/css/dropdown.css">
+
+</head>
+<body>
+
+    <div class="site-wrap">
+        @await Html.PartialAsync("_HeaderPartial");
+
+        <div class="bg-light py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cửa hàng</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section">
+            <div class="container">
+
+                <div class="row mb-5">
+                    <div class="col-md-9 order-2">
+
+                        <div class="row">
+                            <div class="col-md-12 mb-5">
+                                <div class="float-md-left mb-4"><h2 class="text-black h5">Các sản phẩm</h2></div>
+                                <div class="d-flex">
+                                    <div class="dropdown mr-1 ml-md-auto">
+                                        @await Component.InvokeAsync("LoaiLatest")
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Xếp theo</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                            <a class="dropdown-item" href="#">Tên, A đến Z</a>
+                                            <a class="dropdown-item" href="#">Tên, Z đến A</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Giá, thấp đến cao</a>
+                                            <a class="dropdown-item" href="#">Giá, cao đến thấp</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 mb-5">
+                            <form asp-controller="Home" asp-action="TimSanPham" method="get" class="site-block-top-search d-flex">
+                                    <input type="text" name="Tensanpham" class="form-control border-1" placeholder="Search" id="inputGia">
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </form>
+                            </div>
+                        </div>
+
+                        <!-- danh mục sản phẩm-->
+                        @RenderBody()
+
+                    </div>
+
+                    <div class="col-md-3 order-1 mb-5 mb-md-0">
+                        <div class="border p-4 rounded mb-4">
+                            <h3 class="mb-3 h6 text-uppercase text-black d-block">Phân loại</h3>
+
+                            @await Component.InvokeAsync("Loai")
+                        </div>
+
+                        <div class="border p-4 rounded mb-4">
+                            <form asp-controller="Home" asp-action="Sanphamtheogia" method="get">
+                            <div class="mb-4">
+                                <h3 class="mb-3 h6 text-uppercase text-black d-block">Lọc theo giá</h3>
+                                <input type="text" name="Gia" class="form-control pl-0 bg-white" placeholder="  Từ 0đ đến">
+
+                            </div>
+
+                            <div class="mb-4">
+                                <h3 class="mb-3 h6 text-uppercase text-black d-block">Kích thước</h3>
+                                <label for="s_sm" class="d-flex">
+                                    <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Nhỏ</span>
+                                </label>
+                                <label for="s_md" class="d-flex">
+                                    <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Vừa</span>
+                                </label>
+                                <label for="s_lg" class="d-flex">
+                                    <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Lớn</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-4">
+                                <h3 class="mb-3 h6 text-uppercase text-black d-block">Màu sắc</h3>
+                                <a href="#" class="d-flex color-item align-items-center">
+                                    <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Đỏ</span>
+                                </a>
+                                <a href="#" class="d-flex color-item align-items-center">
+                                    <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Xanh lá</span>
+                                </a>
+                                <a href="#" class="d-flex color-item align-items-center">
+                                    <span class="bg-info color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Xanh dương</span>
+                                </a>
+                                <a href="#" class="d-flex color-item align-items-center">
+                                    <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Tím</span>
+                                </a>
+                            </div>
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary btn-sm btn-block" >Tìm</button>
+                            </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="site-section site-blocks-2">
+                            <div class="row justify-content-center text-center mb-5">
+                                <div class="col-md-7 site-section-heading pt-4">
+                                    <h2>Các bộ sưu tập</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @await Component.InvokeAsync("Tag")
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_FooterPartial")
+    </div>
+
+    <script src="~/js/action.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-ui.js"></script>
+    <script src="~/ResourceTemplale/js/popper.min.js"></script>
+    <script src="~/ResourceTemplale/js/bootstrap.min.js"></script>
+    <script src="~/ResourceTemplale/js/owl.carousel.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ResourceTemplale/js/aos.js"></script>
+
+    <script src="~/ResourceTemplale/js/main.js"></script>
+
+    <script>
+        $('body').on('click', 'li.page-item', function (e) {
+            e.preventDefault();
+            var page = $(this).data("page");
+            var keyword = $("#keyword").val();
+            $.ajax({
+                url: "/Home/LocSanPham",
+                data: { keyword: keyword, pageIndex: page },
+                success: function (response) {
+                    $("div#content").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $("button#btnSearch").click(function (e) {
+            var keyword = $("#keyword").val();
+            var data = { keyword: keyword };
+
+            $.ajax({
+                url: "/Home/LocSanPham",
+                data: data,
+                success: function (response) {
+                    $("div#content").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $('body').on('click', '.btn-delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+            if (confirm("Bạn có chắc chắn muốn xóa cửa hàng này không?")) {
+                $.ajax({
+                    url: "/Home/Delete",
+                    type: "POST",
+                    data: { id: id },
+                    success: function () {
+                        alert("Đã xóa thành công!");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra khi xóa.");
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('a#logout').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/acc/logout',
+                    type: 'POST',
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

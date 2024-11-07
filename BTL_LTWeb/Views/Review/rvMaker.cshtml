@@ -1,0 +1,132 @@
+@{
+}
+
+@model TDanhGia
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+@if (ViewBag.hasPurchased)
+{
+    <form asp-controller="Review" asp-action="AlterReview" method="post" id="reviewForm" class="makereview">
+        @if (Model.Diem > 0 && Model.Diem < 6)
+        {
+            <div class="ratedannounce">
+                <span>Bạn đã đánh giá sản phẩm này</span>
+            </div>
+        }
+        <div class="pointrating">
+            <p>Đánh giá sản phẩm</p>
+            <div>
+                <label>
+                    <input asp-for="Diem" type="radio" name="Diem" value="1" />
+                    <i class='bx bxs-star'></i>
+                </label>
+                <label>
+                    <input asp-for="Diem" type="radio" name="Diem" value="2" />
+                    <i class='bx bxs-star'></i>
+                </label>
+                <label>
+                    <input asp-for="Diem" type="radio" name="Diem" value="3" />
+                    <i class='bx bxs-star'></i>
+                </label>
+                <label>
+                    <input asp-for="Diem" type="radio" name="Diem" value="4" />
+                    <i class='bx bxs-star'></i>
+                </label>
+                <label>
+                    <input asp-for="Diem" type="radio" name="Diem" value="5" />
+                    <i class='bx bxs-star'></i>
+                </label>
+            </div>
+        </div>
+        <div class="reviewcomment">
+            <textarea asp-for="BinhLuan" class="comment-text" placeholder="Để lại bình luận">
+                @if (!string.IsNullOrWhiteSpace(Model.BinhLuan))
+                {
+                    @foreach (string s in Model.BinhLuan.Split("\n"))
+                    {
+                        @s
+
+                        <br>
+                    }
+                }
+            </textarea>
+        </div>
+        <div class="action">
+            <label id="clear"><i class='bx bx-eraser'></i></label>
+            <label><input type="submit"><i class='bx bxs-send'></i></label>
+        </div>
+    </form>
+
+    <script>
+        if (@Model.Diem != null && @Model.Diem > 0 && @Model.Diem < 6) {
+            document.querySelectorAll('input[name="Diem"]')[@Model.Diem-1].setAttribute('checked', true);
+            for (let i = 0; i < @Model.Diem; i++) {
+                document.querySelectorAll('.bx.bxs-star')[i].style.color = '#7971ea';
+            }
+        }
+
+        $('input[name="Diem"]').each(function (index) {
+            $(this).change(function () {
+                $('.bx.bxs-star').css('color', 'lightgray');
+                for (let i = 0; i <= index; i++) {
+                    $('.bx.bxs-star').eq(i).css('color', '#7971ea');
+                }
+            });
+        });
+
+        $("#clear").click(function (e) {
+            $('.bx.bxs-star').css('color', 'lightgray');
+            $('input[name="Diem"]').prop('checked', false);
+            $("textarea").val('');
+        });
+
+        $("#reviewForm").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AlterReview", "Review")',
+                data: $(this).serialize() + "&pid=" + '@ViewBag.pid',
+                success: function (response) {
+                    alertResult(response);
+                    if (response == "SACT") {
+                        ajaxList();
+                        ajaxStats();
+                        ajaxMaker();
+                    }
+                }
+            });
+        });
+    </script>
+} else
+{
+    <div class="makereview">
+        <p style="width: 100%; text-align: center; margin-bottom: 0px">Hãy mua hàng để đánh giá sản phẩm này</p>
+    </div>
+}
+
+<style>
+    .makereview {
+        padding: 15px;
+        border-radius: 5px;
+        border: solid 2px #eceff1;
+        margin-bottom: 20px;
+    }
+
+    [type=radio]:not(#detail) {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+        [type=radio]:not(#detail) + .bx {
+        cursor: pointer;
+        color: lightgray;
+        font-size: 24px;
+    }
+
+        [type=radio]:not(#detail):checked + .bx {
+        color: #7971ea;
+    }
+</style>

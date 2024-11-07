@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TChiTietSanPham>
+
+@{
+    ViewData["Title"] = "Thông tin Sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Chi Tiết sản phẩm</h1>
+
+<p>
+    <a asp-action="Create">Thêm Sản phẩm</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KichThuoc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MauSac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnhDaiDien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slton)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KichThuoc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MauSac)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnhDaiDien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slton)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaChiTietSp">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.MaChiTietSp">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaChiTietSp">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

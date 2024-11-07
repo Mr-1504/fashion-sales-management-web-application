@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TDanhSachCuaHang>
+
+<div id="ListContainer" class="scrollbar-inner">
+    <ul id="list_listitem" class="unstyled prettyListItems" cur-page="1">
+        @foreach (var store in Model)
+        {
+            <li class="li-location see-map-location" item-id="@store.SDTCuaHang" marker_order="0" data-lat="@store.KinhDo" data-lng="@store.ViDo">
+                <input type="radio" name="check_localtor" id="@store.SDTCuaHang">
+                <label for="@store.SDTCuaHang">
+                    <div class="corePrettyStyle prettylink map location">
+                        <p class="location-name">@store.KhuVuc</p>
+                        <p class="location-address">@store.DiaChi</p>
+                        <p class="location-telephone">Điện thoại: @store.SDTCuaHang</p>
+                    </div>
+                </label>
+            </li>
+        }
+    </ul>
+</div>
+

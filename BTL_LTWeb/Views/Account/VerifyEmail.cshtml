@@ -1,0 +1,110 @@
+﻿@model BTL_LTWeb.ViewModels.VerifyCodeViewModel
+
+@{
+    ViewData["Title"] = "Xác Nhận Email";
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+<br />
+<br />
+<h2>Nhập Mã Xác Nhận</h2>
+<br />
+<br />
+<div>
+    <p>Chúng tôi đã gửi mã xác nhận đến email của Bạn. Vui lòng nhập mã và xác nhận.</p>
+    <!-- Form nhập mã xác nhận -->
+    <form method="post" asp-controller="Account" asp-action="VerifyEmail">
+        <input type="hidden" asp-for="Email" value=@Model.Email />
+        <div class="mb-3">
+            <label asp-for="ConfirmationCode" class="form-label">Mã xác nhận</label>
+            <input asp-for="ConfirmationCode" class="form-control" />
+            <span asp-validation-for="ConfirmationCode" class="text-danger"></span>
+        </div>
+
+        <div>
+            <span class="text-danger">
+                @Html.ValidationSummary(true)
+            </span>
+        </div>
+        <p id="message">Gửi lại mã sau <span id="countdown"></span> giây.</p>
+        <a class="text-primary fw-bold ms-2" id="resendCodeBtn" onclick="resendCode()" style="cursor:pointer">Gửi lại mã</a><br />
+        <div class="d-flex justify-content-between align-items-sm-center">
+            <a class="text-primary fw-bold ms-2" onclick="window.location.href='@Url.Action("Login", "Account")'" style="cursor:pointer">Hủy</a>
+            <button type="submit" class="btn btn-primary">Xác Nhận</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        let countdownElement = document.getElementById('countdown');
+        let message = document.getElementById('message');
+        let resendCodeBtn = document.getElementById('resendCodeBtn');
+        let countdown = sessionStorage.getItem("countdown");
+        resendCodeBtn.style.display = 'none';
+        if (countdown == null) {
+            countdown = 30;
+            countdownElement.textContent = countdown;
+            sessionStorage.setItem("countdown", countdown);
+        } else if (countdown <= 0) {
+            countdownElement.style.display = 'none';
+            resendCodeBtn.style.display = 'inline-block';
+        }
+        else {
+            countdown = sessionStorage.getItem("countdown");
+            countdownElement.textContent = countdown;
+        }
+        let timer = setInterval(function () {
+            countdown--;
+            countdownElement.textContent = countdown;
+            sessionStorage.setItem("countdown", countdown);
+
+            if (countdown <= 0) {
+                clearInterval(timer);
+
+                message.style.display = 'none';
+                resendCodeBtn.style.display = 'inline-block';
+            }
+        }, 1000);
+
+        function resendCode() {
+            alertResult(true, "Đang gửi lại mã xác nhận");
+            $.ajax({
+                url: '/api/acc/xac-thuc-email/gui-lai-ma',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    email: '@Model.Email', 
+                    name: '@Model.Name',   
+                    status: parseInt('@Model.Status') 
+                }),
+                success: function (response) {
+                    alertResult(true, "Gửi lại thành công");
+                    countdown = 30;
+                    countdownElement.textContent = countdown;
+                    resendCodeBtn.style.display = 'none';
+                    message.style.display = 'inline-block';
+                    sessionStorage.setItem("countdown", countdown);
+
+
+                    timer = setInterval(function () {
+                        countdown--;
+                        countdownElement.textContent = countdown;
+                        sessionStorage.setItem("countdown", countdown);
+
+                        if (countdown <= 0) {
+                            clearInterval(timer);
+                            resendCodeBtn.style.display = 'inline-block';
+                            message.style.display = 'none';
+                        }
+                    }, 1000);
+                },
+                error: function (xhr, status, error) {
+                    alertResult(false, "Gửi mã thất bại, thử lại sau");
+                }
+            });
+        }
+    </script>
+}

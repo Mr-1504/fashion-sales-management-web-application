@@ -1,0 +1,292 @@
+@{
+}
+
+@model IEnumerable<BTL_LTWeb.ViewModels.ReviewContentViewModel>
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+@if (Model.Count() == 0)
+{
+    <h5 class="noreviewannounce">Chưa có đánh giá cho sản phẩm này</h5>
+}
+
+@foreach (var it in Model)
+{
+    <div class="rvlist-per" id="rvper_@(it._reviewID)">
+        <div class="thereview">
+            <div class="customerreview deleteconfirm" id="@(it._reviewID)" style="display: none;"></div>
+            <div class="customerreview" id="review_@(it._reviewID)">
+                <div class="reviewheader">
+                    <div class="rvhead-userinfo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/15032/15032322.png">
+                        <p>@it.CsName</p>
+                    </div>
+                    @if (it._userID == ViewBag.uid && ViewBag.utype == "KhachHang")
+                    {
+                        <div class="rvhead-crudoptions">
+                            <div class="truecscrud" style="display: true;">
+                                <a class="delete rv" id="@it._reviewID"><i class='bx bx-trash'></i></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="reviewbody">
+                    <div class="reviewcontent">
+                        @foreach(string s in it.RvMessage.Split("\n"))
+                        {
+                            @s<br>
+                        }
+                    </div>
+                    @if (it.OldReviews.Count() > 0)
+                    {
+                        <div class="reviewhistory">
+                            <label class="historyexpand" id="@it._reviewID"><i class='bx bxs-chevron-down'></i> Lịch sử chỉnh sửa</label>
+                            <div class="historyentries" id="@it._reviewID" style="display: none">
+                                @foreach(var hs in it.OldReviews)
+                                {
+                                    <div class="historyentry">
+                                        <div class="historyentryheader">
+                                            <p>@hs.DatePosted</p>
+                                            <p>@hs.StarRated★ <i class='bx bx-check'></i>@hs.LikeCount <i class='bx bx-x'></i>@hs.HateCount</p>
+                                        </div>
+                                        <p class="historytext">
+                                            @foreach(var s in hs.Message.Split("\n"))
+                                            {
+                                                @s<br>
+                                            }
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="reviewfooter">
+                    <div class="timeandrate">
+                        <p class="reviewdate">@it.DatePosted</p>
+                        <p class="reviewedstars">@string.Concat(Enumerable.Repeat("★", it.StarRated))</p>
+                    </div>
+                    <div class="reviewreact">
+                        <div class="upvote @(it.VotesCasted.Any(it => it.MaKhachHang == ViewBag.uid && it.Thich > 0) ? "votecasted" : "")" id="@it._reviewID">
+                            <i class='bx bx-check'></i>
+                            <p>@it.VotesCasted.Where(it => it.Thich > 0).Count()</p>
+                        </div>
+                        <div class="downvote @(it.VotesCasted.Any(it => it.MaKhachHang == ViewBag.uid && it.Thich < 0) ? "votecasted" : "")" id="@it._reviewID">
+                            <i class='bx bx-x'></i>
+                            <p>@it.VotesCasted.Where(it => it.Thich < 0).Count()</p>
+                        </div>
+                    </div>
+                </div>
+                @if (string.IsNullOrWhiteSpace(it.EpName) && ViewBag.utype != "KhachHang")
+                {
+                    <a class="reply" id="@it._reviewID">Trả lời</a>
+                }
+            </div>
+        </div>
+
+        <div class="replysection" id="@it._reviewID">
+            <div class="makingreply" id="@(it._reviewID)" style="display: none;"></div> 
+            @if (it.EpName != null)
+            {
+                <div class="thereply" id="reply_@(it._reviewID)">
+                    <div class="employeereply">
+                        <div class="reviewheader">
+                            <div class="rvhead-userinfo">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3685/3685999.png">
+                                <p>@it.EpName</p>
+                            </div>
+                            @if (it._emplID == ViewBag.uid && ViewBag.utype != "KhachHang")
+                            {
+                                <div class="rvhead-crudoptions">
+                                    <div class="truecscrud" style="display: true;">
+                                        <a class="edit rp" id="@(it._reviewID)"><i class='bx bx-edit-alt'></i></a>
+                                        <a class="delete rp" id="@(it._reviewID)"><i class='bx bx-trash'></i></a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="reviewbody">
+                            <div class="reviewcontent">
+                                @foreach (string s in it.RpMessage.Split("\n"))
+                                {
+                                    @s<br>
+                                }
+                            </div>
+                        </div>
+                        <div class="reviewfooter">
+                            @if (it.VotesCasted.FirstOrDefault(t => t.MaKhachHang == it._userID).HuuIch == 1)
+                            {
+                                <p class="authorapproved" id="@it._reviewID" style="color: limegreen">
+                                    <i class='bx bxs-badge-check'></i> Hữu ích với tác giả
+                                </p>
+                            } else
+                            {
+                                <p></p>
+                            }
+                            <div class="reviewreact">
+                                <div class="approve @(it.VotesCasted.Any(it => it.MaKhachHang == ViewBag.uid && it.HuuIch > 0) ? "votecasted" : "")" id="@it._reviewID">
+                                    <i class='bx bxs-badge-check'></i>
+                                    <p>@it.VotesCasted.Where(it => it.HuuIch > 0).Count()</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@if (ViewBag.pageCount > 1)
+{
+    <div class="listpagination">
+        <label class="pagefront" id="pag_tofront"><i class='bx bx-chevrons-left'></i>1</label>
+        <div class="pagepicker">
+            <ul>
+                @for (int i = ViewBag.currentPage > 2 ? ViewBag.currentPage-2 : 1; i < ViewBag.currentPage; i++)
+                {
+                    <li class="gotopage" id="@i">@i</li>
+                }
+            </ul>
+            <input type="number" id="pag_enterpagnum" value="@ViewBag.currentPage">
+            <ul>
+                @for (int i = ViewBag.currentPage + 1; i <= (ViewBag.pageCount - ViewBag.currentPage > 2 ? ViewBag.currentPage + 2 : ViewBag.pageCount); i++)
+                {
+                    <li class="gotopage" id="@i">@i</li>
+                }
+            </ul>
+        </div>
+        <label class="pageend" id="pag_toend">@ViewBag.pageCount<i class='bx bx-chevrons-right'></i></label>
+    </div>
+}
+
+<script>
+    (function () {
+        _currentPage = @ViewBag.currentPage;
+    })();
+
+    //review manipulation (customers)
+    $("a.delete.rv").click( function (e) {
+        var rid = $(this).attr("id");
+        var data = { pid: '@ViewBag.pid', rid: rid };
+
+        $.ajax({
+            url: '@Url.Action("DeleteReviewAsk", "Review")',
+            data: data,
+            success: function (response) {
+                $(".deleteconfirm[id='" + rid + "']").html(response);
+            }
+        });
+
+        $("#review_" + rid).hide();
+        $(".deleteconfirm[id='" + rid + "']").show();
+    });
+
+    //reply craft n manipulation (employees)
+    $("a.reply").click(function (e) {
+        var rid = $(this).attr("id");
+        var data = { pid: '@ViewBag.pid', rid: rid };
+        $.ajax({
+            url: '@Url.Action("OpenReplySection", "Review")',
+            data: data,
+            success: function (response) {
+                $("div.makingreply[id='" + rid + "']").html(response);
+                $("div.makingreply[id='" + rid + "']").show();
+            }
+        });
+    });
+    $("a.delete.rp").click(function (e) {
+        var rid = $(this).attr("id");
+        if (confirm("Xác nhận xoá câu trả lời cho bình luận " + rid + "?")) {
+            $.ajax({
+                url: '@Url.Action("DeleteReply", "Review")',
+                data: { pid: '@ViewBag.pid', rid: rid },
+                success: function (response) {
+                    alertResult(response);
+                    if (response == "SACT") {
+                        ajaxList();
+                    }
+                }
+            });
+        }
+    });
+    $("a.edit.rp").click(function (e) {
+        var rid = $(this).attr("id");
+        $.ajax({
+            url: '@Url.Action("OpenReplySection", "Review")',
+            data: { pid: '@ViewBag.pid', rid: rid },
+            success: function (response) {
+                $("div.makingreply[id='" + rid + "']").html(response);
+                $("#reply_" + rid).hide();
+                $("div.makingreply[id='" + rid + "']").show();
+            }
+        });
+    });
+
+    //pagination
+    $("li.gotopage").click(function (e) {
+        _currentPage = $(this).attr("id");
+        ajaxList();
+    });
+    $("#pag_tofront").click(function (e) {
+        _currentPage = 1;
+        ajaxList();
+    });
+    $("#pag_toend").click(function (e) {
+        _currentPage = '@ViewBag.pageCount';
+        ajaxList();
+    });
+    $("#pag_enterpagnum").blur(function (e) {
+        _currentPage = $(this).val();
+        ajaxList();
+    });
+
+    //vote listener
+    $("div.upvote").click(function (e) {
+        var rid = $(this).attr("id");
+        $.ajax({
+            url: '@Url.Action("CastVote", "Review")',
+            data: { pid: '@ViewBag.pid', rid: rid, type: 'L' },
+            success: function (response) {
+                alertResult(response);
+                if (response == "SACT") {
+                    ajaxList();
+                }
+            }
+        });
+    }); 
+    $("div.downvote").click(function (e) {
+        var rid = $(this).attr("id");
+        $.ajax({
+            url: '@Url.Action("CastVote", "Review")',
+            data: { pid: '@ViewBag.pid', rid: rid, type: 'D' },
+            success: function (response) {
+                alertResult(response);
+                if (response == "SACT") {
+                    ajaxList();
+                }
+            }
+        });
+    }); 
+    $("div.approve").click(function (e) {
+        var rid = $(this).attr("id");
+        $.ajax({
+            url: '@Url.Action("CastVote", "Review")',
+            data: { pid: '@ViewBag.pid', rid: rid, type: 'H' },
+            success: function (response) {
+                alertResult(response);
+                if (response == "SACT") {
+                    ajaxList();
+                }
+            }
+        });
+    });
+
+    //history expand
+    $("label.historyexpand").click(function (e) {
+        $("div.historyentries[id='" + $(this).attr("id") + "']").toggle();
+        let k = $(this).children('i').eq(0);
+        k.toggleClass("bxs-chevron-down");
+        k.toggleClass("bxs-chevron-up");
+    });
+</script>

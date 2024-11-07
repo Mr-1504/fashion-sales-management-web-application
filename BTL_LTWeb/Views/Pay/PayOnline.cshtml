@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán trực tuyến";
+    Layout = "~/Views/Shared/_PayLayout.cshtml";
+}
+<div style="text-align: center;">
+    <img src="@ViewBag.ImageData" alt="Mô tả hình ảnh" style="display: block; margin: 0 auto;" />
+</div>
+
+<p style="text-align: center;">
+    <a asp-action="Success" asp-controller="Pay" type="button" class="btn btn-sm btn-primary">Tôi đã thanh toán xong</a>
+</p>

@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b3947ab1-a97a-4ffc-a9bd-86b533bb86d4</UserSecretsId>
+    <UserSecretsId>72004e1a-05b9-453c-bc88-1a3db8a645fc</UserSecretsId>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\ResourceTemplale\images\**" />
+    <Content Remove="wwwroot\ResourceTemplale\images\**" />
+    <EmbeddedResource Remove="wwwroot\ResourceTemplale\images\**" />
+    <None Remove="wwwroot\ResourceTemplale\images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="X.PagedList" Version="10.2.1" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="10.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\js\NewFolder\" />
+    <Folder Include="wwwroot\ResourceTemplale\Profile\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\ResourceTemplale\scss\.DS_Store" />
+    <None Include="wwwroot\ResourceTemplale\scss\bootstrap\.DS_Store" />
+  </ItemGroup>
+
+</Project>

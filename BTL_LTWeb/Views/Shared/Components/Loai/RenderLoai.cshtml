@@ -1,0 +1,18 @@
+﻿@model List<string>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<ul class="list-unstyled mb-0">
+    <li class="mb-1" id="-1">
+        <a asp-action="index" class="d-flex">
+            <span>Tất cả</span>
+            <span class="text-black ml-auto">@Model.Count()</span>
+        </a>
+    </li>
+    @foreach (var m in Model)
+    {
+        <li class="mb-1">
+            <a asp-controller="Home" asp-action="Sanphamtheoloai" asp-route-Loai="@m" class="d-flex">
+                <span>@m</span> 
+            </a>
+        </li>
+    }
+</ul>

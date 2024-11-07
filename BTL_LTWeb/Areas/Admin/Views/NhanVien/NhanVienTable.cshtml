@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TNhanVien>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    var tenNhanVien = ViewContext.HttpContext.Request.Query["TenNhanVien"];
+}
+<table class="table table-hover table-responsive ">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Tên Nhân viên
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Chức vụ
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Ghi chú
+            </th>
+            <th>
+                Chức năng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert alert-primary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNhanVien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNhanVien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChucVu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GhiChu)
+                </td>
+                <td>
+                    <a href="@Url.Action("Suanhanvien", new { id = item.MaNhanVien })" class="edit-link" data-id="@item.MaNhanVien">Chỉnh sửa</a> |
+                    <a href="@Url.Action("XoaNhanVien", new { id = item.MaNhanVien })" class="delete-link" data-id="@item.MaNhanVien">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

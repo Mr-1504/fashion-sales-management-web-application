@@ -1,0 +1,65 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.THoaDonBan>
+@if (ViewBag.ThongBao != null)
+{
+    <p>@ViewBag.ThongBao</p>
+    <p>
+        <a class="btn btn-info" href="@Url.Action("danhsachkhachhang", "KhachHang")">Trở lại</a>
+    </p>
+}
+else
+{
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr class="table-warning">
+                <th>
+                    Mã hoá đơn
+                </th>
+                <th>
+                    Ngày tạo
+                </th>
+                <th>
+                    Phương thức thanh toán
+                </th>
+                <th>
+                    Ghi chú
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="alert alert-primary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaHoaDonBan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayHoaDon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhuongThucThanhToan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TongTienHd)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.pageNum; i++)
+        {
+            <li class="page-item @(i == (ViewBag.page ?? 1) ? "active" : "")" data-page="@i">
+                <a class="page-link" href="javascript:void(0);">@i</a>
+            </li>
+        }
+    </ul>
+    <p>
+        <a class="btn btn-info" href="@Url.Action("danhsachkhachhang", "KhachHang")">Trở lại</a>
+    </p>
+}

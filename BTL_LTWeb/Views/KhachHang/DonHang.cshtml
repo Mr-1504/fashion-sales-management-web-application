@@ -1,0 +1,135 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.THoaDonBan>
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+    <form asp-controller="KhachHang" asp-action="DonHang" method="get" class="site-block-top-search d-flex">
+        <input type="text" name="searchTerm" class="forcontrol border-1" placeholder="Search" id="searchInput">
+    <input type="hidden" name="Page" value="@ViewBag.CurrentPage" />
+        <button type="submit" class="btn btn-primary">Tìm</button>
+    </form>
+    <p></p>
+<div id="orderNotification" style="display:@(ViewBag.Notification != null ? "block" : "none");" class="alert alert-warning">
+    @ViewBag.Notification
+</div>
+    <div class="alert alert-warning">
+        <table class="table table-hover table-responsive table-fixed">
+            <thead>
+                    <tr class="table-warning">
+                        <th>
+                        Mã HD
+                        </th>
+                        <th>
+                        Ngày 
+                        </th>
+                        <th>
+                        PTTT
+                        </th>
+                        <th>
+                        Tổng tiền
+                        </th>
+                        <th>
+                        Chức năng
+                        </th>
+                    </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr class="alert alert-primary">
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.MaHoaDonBan)
+                        </td>
+                    <td class ="centered-cell">
+                        @item.NgayHoaDon?.ToString("dd/MM/yyyy")
+                        </td>
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.PhuongThucThanhToan)
+                        </td>
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.TongTienHd)
+                        </td>
+                    <td class="centered-cell">
+                        <a href="@Url.Action("ChiTietDonHang", "KhachHang", new { MaDH = item.MaHoaDonBan })">Chi tiết</a>
+                    </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+            <a class="page-link" href="@Url.Action("DonHang", "KhachHang", new { Page = i })">@i</a>
+        </li>
+    }
+</ul>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('body').on('click', 'li.page-item', function (e) {
+            e.preventDefault();
+            var page = $(this).find("a").attr("href").split("Page=")[1].split("&")[0];
+            var searchTerm = $("input[name='searchTerm']").val(); 
+
+            $.ajax({
+                url: "/KhachHang/DonHang",
+                data: { Page: page, searchTerm: searchTerm }, 
+                success: function (response) {
+
+                    handleResponse(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $('form').on('submit', function (e) {
+            e.preventDefault(); 
+            var searchTerm = $("input[name='searchTerm']").val(); 
+            $.ajax({
+                url: "/KhachHang/DonHang",
+                data: { searchTerm: searchTerm, Page: 1 }, 
+                success: function (response) {
+                    handleResponse(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $("#searchInput").on('input', function () {
+            var searchTerm = $(this).val();
+            if (searchTerm === "") {
+                $.ajax({
+                    url: "/KhachHang/DonHang",
+                    data: { Page: 1, searchTerm: "" },
+                    success: function (response) {
+                        handleResponse(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Có lỗi xảy ra:", error);
+                    }
+                });
+            }
+        });
+
+        function handleResponse(response) {
+            var tableContent = $(response).find("table.table-responsive").html();
+            $("table.table-responsive").html(tableContent);
+            $("ul.pagination").html($(response).find("ul.pagination").html());
+
+            var notificationMessage = $(response).find("#orderNotification").text().trim();
+            if (notificationMessage !== '') {
+                $("#orderNotification").text(notificationMessage).show();
+                setTimeout(function () {
+                    $("#orderNotification").fadeOut();
+                }, 3000);
+            } else {
+                $("#orderNotification").hide();
+            }
+        }
+    });
+</script>

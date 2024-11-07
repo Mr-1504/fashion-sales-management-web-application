@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BeA Fashion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css/?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="~/ResourceTemplale/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.theme.default.min.css">
+
+
+    <link rel="stylesheet" href="~/ResourceTemplale/css/aos.css">
+
+    <link rel="stylesheet" href="~/ResourceTemplale/css/style.css">
+
+    <link rel="stylesheet" href="~/css/dropdown.css">
+
+</head>
+<body>
+
+    <div class="site-wrap">
+       @await Html.PartialAsync("_HeaderPartial")
+
+        <div class="site-blocks-cover" style="background-image: url(/images/hero_1.jpg);" data-aos="fade">
+            <div class="container">
+                <div class="row align-items-start align-items-md-center justify-content-end">
+                    <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
+                        <h1 class="mb-2">Đôi giày hoàn hảo của bạn</h1>
+                        <div class="intro-text text-center text-md-left">
+                            <p class="mb-4">Sự kết hợp hoàn hảo giữa phong cách và sự thoải mái, thiết kế trẻ trung, hiện đại. Chất liệu cao cấp cùng đế giày êm ái giúp nâng đỡ bàn chân tối ưu. </p>
+                            <p>
+                                <a href="/Home/index" class="btn btn-sm btn-primary">Mua ngay</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section site-section-sm site-blocks-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="">
+                        <div class="icon mr-4 align-self-start">
+                            <span class="icon-truck"></span>
+                        </div>
+                        <div class="text">
+                            <h2 class="text-uppercase">Miễn phí giao hàng</h2>
+                            <p>Dịch vụ miễn phí vận chuyển giúp bạn thoải mái mua sắm mà không lo về chi phí giao hàng. Chỉ cần đặt hàng, chúng tôi sẽ giao tận nơi mà không tính thêm phí ship!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="icon mr-4 align-self-start">
+                            <span class="icon-refresh2"></span>
+                        </div>
+                        <div class="text">
+                            <h2 class="text-uppercase">Miễn phí đổi trả</h2>
+                            <p>Dịch vụ đổi trả miễn phí của chúng tôi mang đến sự an tâm cho khách hàng khi mua sắm, giúp bạn dễ dàng đổi hoặc trả hàng mà không mất phí. Chỉ cần giữ nguyên sản phẩm và đáp ứng điều kiện đơn giản, bạn có thể hoàn toàn yên tâm khi trải nghiệm mua sắm cùng chúng tôi!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="icon mr-4 align-self-start">
+                            <span class="icon-help"></span>
+                        </div>
+                        <div class="text">
+                            <h2 class="text-uppercase">Hỗ trợ khách hàng</h2>
+                            <p>Dịch vụ hỗ trợ khách hàng luôn sẵn sàng tư vấn, giải đáp mọi thắc mắc và giúp bạn chọn lựa sản phẩm phù hợp. Đội ngũ chuyên nghiệp cam kết mang đến trải nghiệm mua sắm thuận tiện, nhanh chóng, và đáng tin cậy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section site-blocks-2">
+            <div class="container">
+                <div class="row">
+                    <!--
+                        render collection
+                    -->
+                    @await Component.InvokeAsync("Tag")
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section block-3 site-blocks-2 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 site-section-heading text-center pt-4">
+                        <h2>Danh mục sản phẩm</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="nonloop-block-3 owl-carousel">
+                            <!--
+                                danh mục sản phẩm
+                            -->
+                            @RenderBody();
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("DiscountBanner")
+
+        @await Html.PartialAsync("_FooterPartial")
+ </div>
+
+
+    <script src="~/ResourceTemplale/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ResourceTemplale/js/popper.min.js"></script>
+    <script src="~/ResourceTemplale/js/bootstrap.min.js"></script>
+    <script src="~/ResourceTemplale/js/owl.carousel.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ResourceTemplale/js/aos.js"></script>
+    <script src="~/ResourceTemplale/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('a#logout').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/acc/logout',
+                    type: 'POST',
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

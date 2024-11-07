@@ -1,0 +1,89 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BeA Fashion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="~/ResourceTemplale/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/ResourceTemplale/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/ResourceTemplale/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="~/ResourceTemplale/css/aos.css">
+
+    <link rel="stylesheet" href="~/ResourceTemplale/css/style.css">
+    <link rel="stylesheet" href="~/css/dropdown.css">
+    <link rel="stylesheet" href="~/css/review.css">
+
+
+</head>
+<body>
+
+    <div class="site-wrap">
+        @await Html.PartialAsync("_HeaderPartial");
+
+
+        @RenderBody()
+   
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="site-section site-blocks-2">
+                            <div class="row justify-content-center text-center mb-5">
+                                <div class="col-md-7 site-section-heading pt-4">
+                                    <h2>Danh mục sản phẩm</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                        @await Component.InvokeAsync("Tag")
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_FooterPartial")
+    </div>
+
+    <script src="~/js/action.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-3.3.1.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery-ui.js"></script>
+    <script src="~/ResourceTemplale/js/popper.min.js"></script>
+    <script src="~/ResourceTemplale/js/bootstrap.min.js"></script>
+    <script src="~/ResourceTemplale/js/owl.carousel.min.js"></script>
+    <script src="~/ResourceTemplale/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/ResourceTemplale/js/aos.js"></script>
+
+    <script src="~/ResourceTemplale/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('a#logout').on('click', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/acc/logout',
+                    type: 'POST',
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

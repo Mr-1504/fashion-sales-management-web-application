@@ -1,0 +1,10 @@
+﻿@model int
+
+@if (User.Identity.IsAuthenticated && Model > 0)
+{
+    <span class="count">@Model</span>
+}
+else
+{
+    <span class="count" style="display:none"></span>
+}

@@ -1,0 +1,31 @@
+﻿@model BTL_LTWeb.Models.TTag
+
+@{
+    ViewData["Title"] = "Thông tin Bộ sưu tập";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Details</h1>
+
+<div>
+    <h4>TTag</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TagName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TagName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TagImage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TagImage)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TagId">Sửa</a> |
+    <a asp-action="Index">Quay lại</a>
+</div>

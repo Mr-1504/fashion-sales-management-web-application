@@ -1,0 +1,32 @@
+﻿@model BTL_LTWeb.Models.TGioHang
+
+<tr>
+    <td>
+        <input type="checkbox" id="check" class="product-checkbox" name="selectedItems" value="@Model.MaGioHang" />
+    </td>
+    <td class="product-thumbnail">
+        <img src=~/images/@($"{Model.ChiTietSanPham.DanhMucSp.AnhDaiDien}") alt="Image" class="img-fluid">
+    </td>
+    <td class="product-name">
+        <h2 style="cursor: pointer;" onclick="window.location.href='Home/ChitietSpNew?MaSp=@Model.ChiTietSanPham.DanhMucSp.MaSp'" class="h5 text-black">
+            @Model.ChiTietSanPham.DanhMucSp.TenSp
+        </h2>
+    </td>
+    <td>@Model.ChiTietSanPham.KichThuoc</td>
+    <td>@Model.ChiTietSanPham.MauSac</td>
+    <td>@Model.ChiTietSanPham.DanhMucSp.Gia</td>
+    <td>
+        <div class="input-group mb-3" style="max-width: 150px;">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+            </div>
+            <input type="text" class="form-control text-center" id="quantity" value=@Model.SoLuong placeholder="" readonly>
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+            </div>
+        </div>
+    </td>
+    <td>@(Convert.ToInt32(Model.ChiTietSanPham.DanhMucSp.Gia) * Model.SoLuong)</td>
+    <td><a id="remove" class="btn btn-primary btn-sm" style="color:white">X</a></td>
+</tr>
+

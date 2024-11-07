@@ -1,0 +1,35 @@
+﻿@model List<BTL_LTWeb.Models.TGioHang>
+
+<table class="table table-bordered" id="items">
+    <thead>
+        <tr>
+            <th class="product-select-all">
+                <input type="checkbox" id="all" />
+            </th>
+            <th class="product-thumbnail">Ảnh</th>
+            <th class="product-name">Tên sản phẩm</th>
+            <th class="product-size">Kích thước</th>
+            <th class="product-color">Màu sắc</th>
+            <th class="product-price">Giá</th>
+            <th class="product-quantity">Số lượng</th>
+            <th class="product-total">Tổng</th>
+            <th class="product-remove">Xóa</th>
+        </tr>
+    </thead>
+    <tbody >
+        @foreach (var item in Model)
+        {
+            if (item?.ChiTietSanPham != null && item.ChiTietSanPham.DanhMucSp != null)
+            {
+                @await Html.PartialAsync("_CartPartial", item)
+                ;
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">Sản phẩm không có thông tin.</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

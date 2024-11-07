@@ -1,0 +1,138 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/DetailLayout.cshtml";
+    var email = "";
+    if (User.Identity.IsAuthenticated)
+        email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+}
+
+@model BTL_LTWeb.ViewModels.HomeProductDetailViewModel
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">@Model.product.TenSp</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/images/@($"{Model.product.AnhDaiDien}")" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-black">@Model.product.TenSp</h2>
+                <p>@Model.product.GioiThieuSp</p>
+                <p class="mb-4">@Model.product.GioiThieuSp</p>
+                <p><strong class="text-primary h4">$@Model.product.Gia</strong></p>
+
+                <form id="addToCartForm" asp-action="AddToCart" asp-controller="Cart" method="post">
+                    <input type="hidden" name="MaSP" value="@Model.product.MaSp" />
+
+                    <div class="mb-3">
+                        <label class="d-flex">Chọn kích thước:</label>
+                        @foreach (var size in Model.Sizes)
+                        {
+                            <label class="d-inline-flex mr-3 mb-3">
+                                <input id="detail" type="radio" name="Size" value="@size" /> @size
+                            </label>
+                        }
+                    </div>
+                    <div class="mb-3">
+                        <label class="d-flex">Chọn màu sắc:</label>
+                        @foreach (var color in Model.Colors)
+                        {
+                            <label class="d-inline-flex mr-3 mb-3">
+                                <input id="detail" type="radio" name="Color" value="@color" /> @color
+                            </label>
+                        }
+                    </div>
+                    <div class="mb-5">
+                        <div class="input-group mb-3" style="max-width: 120px;">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary js-btn-minus" type="button">−</button>
+                            </div>
+                            <input type="text" class="form-control text-center" name="SoLuong" value="1" placeholder="" aria-label="Số lượng sản phẩm" aria-describedby="button-addon1">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary js-btn-plus" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nút "Add To Cart" -->
+                    <p><button type="submit" class="buy-now btn btn-sm btn-primary">Thêm vào giỏ hàng</button></p>
+                </form>
+
+            </div>
+        </div>
+        <div id="renderreview"></div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var _pid = '@Model.product.MaSp';
+        var _Uid = '@email';
+
+        $('#addToCartForm').on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/gio-hang/them-vao-gio-hang',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    MyAlert(true, "Thêm sản phẩm thành công");
+                    getItemAmount();
+                },
+                error: function (xhr) {
+                    MyAlert(false, xhr.responseText);
+                }
+            });
+        });
+
+        function getItemAmount() {
+            $.ajax({
+                url: `/gio-hang/so-luong`,
+                type: 'GET',
+                success: function (data) {
+                    $('.count').show();
+                    $('.count').text(data);
+                },
+                error: function (xhr, status, error) {
+                    $('.count').hide();
+                }
+            });
+        }
+
+        $.ajax({
+            url: '/review/GlobalReviewAJAX',
+            data: { pid: _pid, email: _Uid },
+            success: function (response) {
+                $("div#renderreview").html(response)
+            }
+        });
+
+        function MyAlert(type, msg) {
+            if (type == true) {
+                $('.bx-x').hide();
+                $('.bx-check').show();
+                $('.alertactionresult').css('border-right', 'solid 5px limegreen');
+            } else {
+                $('.bx-x').show();
+                $('.bx-check').hide();
+                $('.alertactionresult').css('border-right', 'solid 5px tomato');
+            }
+            $(".alertmessage").html(msg);
+            $('.alertactionresult').show();
+            setTimeout(function () {
+                $('.alertactionresult').fadeOut(500);
+            }, 2000);
+        }
+    });
+</script>

@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Danhsachkhachhang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<BTL_LTWeb.Models.TKhachHang>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="row">
+    <h1>Danh sách khách hàng</h1>
+    <form class="site-block-top-search d-flex">
+        <div class="input-group">
+            <input id="keyword" class="form-control" name="keyword" type="text" placeholder="Search">
+            <button id="btnSearch" class="btn btn-primary" type="button">Search</button>
+        </div>
+    </form>
+
+    <p></p>
+    <div id="notification" style="display:none; padding: 10px; margin-bottom: 20px;" class="alert alert-warning"></div>
+    <div class="alert alert-warning">
+        <div id="content">
+            @await Html.PartialAsync("KhachHangTable", Model)
+        </div>
+    </div>
+</div>
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                if ($('#success-message').length) {
+                    setTimeout(function () {
+                        $('#success-message').fadeOut('slow');
+                    }, 3000);
+                }
+                let debounceTimeout;
+                $("#keyword").on('input', function () {
+                    clearTimeout(debounceTimeout);
+                    var keyword = $(this).val();
+                    debounceTimeout = setTimeout(function () {
+                        $.ajax({
+                            url: "/Admin/KhachHang/KhachHangFilter",
+                            data: { keyword: keyword },
+                            success: function (response) {
+                                console.log("Response từ server:", response);
+                                if (response.success === false) {
+                                    $("div#content").html("");
+                                    $("#notification").html(response.message).show().css({
+                                        "color": "red",
+                                        "background-color": "#ffe6e6",
+                                        "border": "1px solid red",
+                                        "display": "block"
+                                    });
+                                } else {
+                                    $("div#content").html(response);
+                                    $("#notification").hide();
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Có lỗi xảy ra:", error);
+                            }
+                        });
+                    }, 1000);
+                });
+                $("#keyword").keypress(function (e) {
+                    if (e.which === 13) {
+                        e.preventDefault();
+                        var keyword = $(this).val();
+                        $.ajax({
+                            url: "/Admin/KhachHang/KhachHangFilter",
+                            data: { keyword: keyword },
+                            success: function (response) {
+                                console.log("Response từ server:", response);
+                                if (response.success === false) {
+                                    $("div#content").html("");
+                                    $("#notification").html(response.message).show().css({
+                                        "color": "red",
+                                        "background-color": "#ffe6e6",
+                                        "border": "1px solid red",
+                                        "display": "block"
+                                    });
+                                } else {
+                                    $("div#content").html(response);
+                                    $("#notification").hide();
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Có lỗi xảy ra:", error);
+                            }
+                        });
+                    }
+                });
+                $('body').on('click', 'li.page-item', function (e) {
+                    e.preventDefault();
+                    var page = $(this).data("page");
+                    var keyword = $("#keyword").val();
+                    $.ajax({
+                        url: "/Admin/KhachHang/KhachHangFilter",
+                        data: { keyword: keyword, pageIndex: page },
+                        success: function (response) {
+                            $("div#content").html(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Có lỗi xảy ra:", error);
+                        }
+                    });
+                });
+
+                $("button#btnSearch").click(function () {
+                    var keyword = $("#keyword").val();
+                    $.ajax({
+                        url: "/Admin/KhachHang/KhachHangFilter",
+                        data: { keyword: keyword },
+                        success: function (response) {
+                            console.log("Response từ server:", response);
+                            if (response.success === false) {
+                                $("div#content").html("");
+                                $("#notification").html(response.message).show().css({
+                                    "color": "red",
+                                    "background-color": "#ffe6e6",
+                                    "border": "1px solid red",
+                                    "display": "block"
+                                });
+                            } else {
+                                $("div#content").html(response);
+                                $("#notification").hide();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Có lỗi xảy ra:", error);
+                        }
+                    });
+                });
+            });
+        </script>
+    }

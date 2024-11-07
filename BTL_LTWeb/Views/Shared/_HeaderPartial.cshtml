@@ -1,0 +1,85 @@
+﻿
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<header class="site-navbar" role="banner">
+    <div class="site-navbar-top">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left" style="opacity: 0%">
+                    <form action="" class="site-block-top-search">
+                        <span class="icon icon-search2"></span>
+                        <input type="text" class="form-control border-0" placeholder="Tìm" style="display: none">
+                    </form>
+                </div>
+
+                <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                    <div class="site-logo">
+                        <a href="/" class="js-logo-clone"> BeA Fashion</a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                    <div class="site-top-icons">
+                        <ul>
+                            <li class="nav-item dropdown">
+
+                                <!-- Dropdown Menu -->
+                                <nav class="site-navigation text-right text-md-center" role="navigation">
+                                    <div class="container">
+                                        <ul class="site-menu js-clone-nav d-none d-md-block">
+                                            <li class="has-children">
+                                                <a href=""><span class="icon icon-person"></span><i class="ti ti-user fs-6"></i></i></a>
+                                                <ul class="dropdown">
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <li><a asp-controller="KhachHang" asp-action="Suathongtin">Hồ sơ</a></li>
+                                                        <li><a id="logout" href="">Đăng xuất</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a asp-action="Login" asp-controller="Account">Đăng nhập</a></li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Cart" class="site-cart">
+                                    <span class="icon icon-shopping_cart"></span>
+                                    @await Component.InvokeAsync("Cart")
+                                </a>
+                            </li>
+                            <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <nav class="site-navigation text-right text-md-center" role="navigation">
+        <div class="container">
+            <ul class="site-menu js-clone-nav d-none d-md-block">
+                <li><a href="/">Trang chủ</a></li>
+                <li class="has-children">
+                    <a>Thành viên</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Phạm Tiến Dũng</a></li>
+                        <li><a href="#">Lê Đăng Sơn</a></li>
+                        <li><a href="#">Trương Văn Minh</a></li>
+                        <li><a href="#">Trịnh Mạnh Quang</a></li>
+                        <li><a href="#">Mai Đức Vinh</a></li>
+                    </ul>
+                </li>
+                <li><a asp-controller="Home" asp-action="index">Cửa Hàng</a></li>
+                <li><a href="">Danh Mục</a></li>
+                <li><a asp-controller="BoSuuTap" asp-action="index" >Bộ Sưu Tập</a></li>
+                <li><a >Liên Hệ</a></li>
+                <li><a asp-controller="Home" asp-action="map">Danh sách cửa hàng</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>

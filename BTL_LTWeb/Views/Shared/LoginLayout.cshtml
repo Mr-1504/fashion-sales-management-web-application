@@ -1,0 +1,103 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modernize Free</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="~/ResourceTemplaleAdmin/css/styles.min.css" />
+    <style>
+        .alertactionresult {
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 400px;
+            height: 50px;
+            padding: 5px;
+            color: white;
+            border-radius: 5px;
+            border-right: solid 10px gold;
+            background-color: #7971ea;
+            box-shadow: 0px 0px 10px lightgray;
+        }
+
+            .alertactionresult i {
+                font-size: 40px;
+                margin-right: 5px;
+            }
+
+            .alertactionresult > p {
+                margin-bottom: 0px;
+            }
+
+    </style>
+</head>
+
+<body>
+    <!--  Body Wrapper -->
+    <div id="notification" class="notification" style="display:none;"></div>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <img src="~/ResourceTemplaleAdmin/images/logos/logo.png" style="display: block; margin: 0 auto; max-width: 80%; height: auto;" /><br /><br />
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alertactionresult" style="display:none;">
+        <i class='bx bx-check'></i>
+        <i class='bx bx-x'></i>
+        <p class="alertmessage">This is a test. Nothing to notice about</p>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/css/bootstrap.css"></script>
+    <script>
+        const isSuccess = '@TempData["Success"]';
+        if (isSuccess == 1) {
+            alertResult(true, "Đăng ký thành công");
+        }else if(isSuccess == 2){
+            alertResult(true, "Đặt lại mật khẩu thành công");
+        }
+        else {
+            $(".alertactionresult").hide();
+        }
+        function alertResult(type, msg) {
+            if (type == true) {
+                $('.bx-x').hide();
+                $('.bx-check').show();
+                $('.alertactionresult').css('border-right', 'solid 5px limegreen');
+            } else {
+                $('.bx-x').show();
+                $('.bx-check').hide();
+                $('.alertactionresult').css('border-right', 'solid 5px tomato');
+            }
+            $(".alertmessage").html(msg);
+            $('.alertactionresult').show();
+            setTimeout(function () {
+                $('.alertactionresult').fadeOut(500);
+            }, 2000);
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

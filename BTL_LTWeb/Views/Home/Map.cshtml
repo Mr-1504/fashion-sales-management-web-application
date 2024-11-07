@@ -1,0 +1,200 @@
+﻿@{
+    ViewData["Title"] = "Cửa hàng ệmải nghiêm";
+    Layout = "~/Views/Shared/_LayoutMap.cshtml";
+}
+@model IEnumerable<TDanhSachCuaHang>
+
+<style>
+    * {
+        font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 300;
+    }
+    #map-container {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .listStore {
+        max-height: 500px; 
+        overflow-y: auto; 
+        padding-right: 10px;
+        overflow-x: hidden;
+        
+    }
+
+    .listStore::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .listStore::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+    }
+
+    .listStore::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    .unstyled {
+        list-style-type: none; 
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .prettyListItems li {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .corePrettyStyle {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+</style>
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="Home">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Hệ thống cửa hàng</strong></div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="map-panel">
+    <div class="map-panel-head">
+        <div class="heading-title">
+            <h1 class="title uppercase margin-bottom0">Hệ thống cửa hàng</h1>
+        </div>
+        <div class="box-title mobile-hidden">
+            <span>Chọn một vị trí (ví dụ: quận, huyện, thành phố, v.v.) để tìm cửa hàng gần nhất.</span>
+        </div>
+        <div id="search-area" class="box-search tabcontent">
+            <form id="store-form-search">
+                <select id="city" name="city">
+                    <option value="">Chọn tỉnh</option>
+                    @foreach (var city in Model.Select(store => store.KhuVuc.Split(',')[1].Trim()).Distinct())
+                    {
+                        <option value="@city">@city</option>
+                    }
+                </select>
+
+                <select id="district" name="district">
+                    <option value="">Chọn huyện</option>
+                </select>
+
+                <div class="action action-search btn-wap">
+                    <button type="submit" class="action primary btn-elise-black" title="Search">
+                        <span>Tìm Kiếm</span>
+                    </button>
+                    <button type="reset" class="action primary btn-elise-white" title="Reset">
+                        <span>Cài lại</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="map-panel-container">
+        <div class="listStore">
+             <div id="storeList">
+                    @await Html.PartialAsync("_StoreList", Model)
+             </div>
+        </div>
+
+        <div id="map-container">
+            <div id="map" style="width: 500px; height: 500px;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script type="text/javascript">
+        var map = L.map('map').setView([21.0278, 105.8342], 13); // Vị trí mặc định
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var markers = [];
+
+        @foreach (var store in Model)
+        {
+            <text>
+                    var marker = L.marker([@store.KinhDo, @store.ViDo]).addTo(map);
+                    marker.bindPopup(`<b>@store.KhuVuc</b><br>@store.DiaChi<br>Điện thoại: @store.SDTCuaHang`);
+                        markers.push(marker);
+            </text>
+        }
+        document.getElementById('city').addEventListener('change', function () {
+            var city = this.value;
+            if (city) {
+                fetch(`@Url.Action("GetDistrictsByCity")?city=${city}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        var districtSelect = document.getElementById('district');
+                        districtSelect.innerHTML = '<option value="">Chọn huyện</option>';
+                        data.forEach(function (district) {
+                            var option = document.createElement('option');
+                            option.value = district;
+                            option.text = district;
+                            districtSelect.appendChild(option);
+                        });
+                    });
+            } else {
+                document.getElementById('district').innerHTML = '<option value="">Chọn huyện</option>';
+            }
+        });
+
+        document.getElementById('store-form-search').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('@Url.Action("SearchStores")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('storeList').innerHTML = html;
+                });
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.matches('input[name="check_localtor"]')) {
+                var selectedLat = parseFloat(event.target.closest('li').dataset.lat);
+                var selectedLng = parseFloat(event.target.closest('li').dataset.lng);
+                map.setView([selectedLat, selectedLng], 13);
+            }
+        });
+        document.getElementById('store-form-search').addEventListener('reset', function (event) {
+            event.preventDefault();
+            var formData = new FormData();
+            fetch('@Url.Action("SearchStores")', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('storeList').innerHTML = html;
+                    document.getElementById('city').value = '';
+                    document.getElementById('district').innerHTML = '<option value="">Chọn huyện</option>';
+                });
+        });
+    </script>
+
+}

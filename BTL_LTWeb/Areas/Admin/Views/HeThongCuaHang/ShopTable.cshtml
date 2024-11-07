@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TDanhSachCuaHang>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                SĐT Cửa Hàng
+            </th>
+            <th>
+                Địa Chỉ
+            </th>
+            <th>
+                Khu Vực
+            </th>
+            <th>
+                Kinh Độ
+            </th>
+            <th>
+                Vĩ Độ
+            </th>
+            <th>
+                Hành Động
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert alert-primary">
+                <td>
+                    @item.SDTCuaHang
+                </td>
+                <td>
+                    @item.DiaChi
+                </td>
+                <td>
+                    @item.KhuVuc
+                </td>
+                <td>
+                    @item.KinhDo
+                </td>
+                <td>
+                    @item.ViDo
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-SDTCuaHang="@item.SDTCuaHang">Sửa</a> |
+                    <a href="javascript:void(0);" class="btn-delete" data-id="@item.SDTCuaHang">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

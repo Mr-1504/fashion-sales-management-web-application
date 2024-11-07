@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TMaGiamGia>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr class="table-warning">
+            <th>Mã Giảm Giá</th>
+            <th>Code</th>
+            <th>Tỉ Lệ Giảm (%)</th>
+            @* <th>Ngày Bắt Đầu</th>
+            <th>Ngày Kết Thúc</th> *@
+            <th>Thời hạn</th>
+            <th>Mô tả</th>
+            <th>Trạng Thái</th>
+            <th>Chức Năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert alert-primary">
+                <td>@item.MaGiamGia</td>
+                <td>@Html.DisplayFor(modelItem => item.Code)</td>
+                <td>@(item.TiLeGiam * 100)</td>
+                @* <td>
+                    @item.NgayBatDau?.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @item.NgayKetThuc?.ToString("dd/MM/yyyy")
+                </td> *@
+                <td>@item.NgayBatDau?.ToString("dd/MM/yyyy") - @item.NgayKetThuc?.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @item.Mota
+                </td>
+                <td>
+                    @(item.TrangThai == 1 ? "Hoạt động" : "Hết hạn")
+                </td>
+                <td>
+                    <a asp-action="ChiTietMaGiamGia" asp-route-id="@item.MaGiamGia" class="btn-detail" data-id="@item.MaGiamGia">Chi tiết</a> |
+                    <a asp-action="GuiMaGiamGia" asp-route-id="@item.MaGiamGia" class="btn-sendEmail" data-id="@item.MaGiamGia">Gửi</a> |
+                    <a asp-action="XoaMaGiamGia" asp-route-id="@item.MaGiamGia" class="btn-delete" data-id="@item.MaGiamGia"s>Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

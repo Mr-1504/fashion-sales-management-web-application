@@ -1,0 +1,608 @@
+* {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.globalaction {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .bx {
+    font-size: 16px;
+  }
+
+  > ul {
+    list-style: none;
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    > li {
+      padding: 5px 10px 5px 10px;
+      cursor: pointer;
+    }
+
+    > li:hover {
+      background-color: #7971ea;
+      color: white;
+    }
+
+    > li:active {
+      background-color: #6860db;
+    }
+
+    > :nth-child(1) {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-right: none;
+    }
+
+    > :nth-child(2) {
+      border-left: solid 1px lightgray;
+      border-right: solid 1px lightgray;
+    }
+
+    > :nth-child(3) {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-left: none;
+    }
+  }
+
+  > .refresh {
+    padding: 5px 10px 5px 10px;
+    border-left: solid 1px lightgray;
+    cursor: pointer;
+  }
+
+  > .refresh:hover {
+    background-color: lightgray;
+  }
+
+  > .refresh:active {
+    background-color: gray;
+  }
+}
+
+.alertactionresult {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 400px;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  border-right: solid 10px gold;
+  background-color: #7971ea;
+  box-shadow: 0px 0px 10px lightgray;
+  i {
+    font-size: 40px;
+    margin-right: 5px;
+  }
+
+  > p {
+    margin-bottom: 0px;
+  }
+}
+
+.dltconfirmform {
+  padding: 15px;
+  border-radius: 5px;
+  border-left: solid 5px rgb(255, 114, 114);
+}
+.dltaction {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  > label {
+    > input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+}
+.dltyes,
+.dltno {
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+.dltyes {
+  border-radius: 5px;
+  border: solid 1px #7971ea;
+  padding: 5px 15px 5px 15px;
+  font-weight: bold;
+}
+.dltyes:hover {
+  border: solid 1px #7971ea;
+  background-color: #7971ea;
+  color: white;
+}
+.dltyes:active {
+  background-color: #6860db;
+}
+
+.rvlist-per {
+  margin-bottom: 20px;
+}
+.noreviewannounce {
+  width: 100%;
+  text-align: center;
+}
+.customerreview {
+  max-width: 100%;
+  padding: 20px;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  border-left: solid 5px #7971ea;
+  border-bottom: solid 5px #7971ea;
+  border-bottom-right-radius: 0px;
+}
+.reviewheader {
+  display: flex;
+  justify-content: space-between;
+}
+.rvhead-userinfo {
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0px 0px 0px 15px;
+    font-weight: bold;
+  }
+  > img {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 5px;
+  }
+}
+.rvhead-crudoptions {
+  display: flex;
+  align-items: center;
+  > .truecscrud {
+    a {
+      font-size: 20px;
+      padding: 5px 10px 5px 10px;
+      cursor: pointer;
+      color: black;
+    }
+    .delete {
+      color: red;
+    }
+    a:hover {
+      background-color: #7971ea;
+      color: white;
+    }
+  }
+}
+.reviewbody {
+  margin: 5px 5px 10px 55px;
+}
+.reviewhistory {
+  margin-top: 10px;
+  > .historyexpand {
+    padding-right: 5px;
+    margin-bottom: 0px;
+    color: #7971ea;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  > .historyexpand:hover {
+    background-color: #dedcff;
+  }
+  > .historyexpand:active {
+    background-color: #ceccff;
+  }
+  > .historyentries {
+      > .historyentry {
+        margin: 5px 0px 5px 7px;
+        border-left: solid 1px lightgray;
+        > .historyentryheader {
+          padding-left: 13px;
+          background-color: rgb(245, 245, 245);
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+          display: flex;
+          > p {
+            margin-bottom: 0px;
+            padding-right: 5px;
+            margin-right: 15px;
+          }
+        }
+        > .historytext {
+          padding-left: 13px;
+          margin-bottom: 0px;
+          margin-top: 2px;
+          color: gray;
+        }
+      }
+  }
+}
+.reviewfooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    margin: 0px 0px 0px 0px;
+  }
+  > .timeandrate {
+    display: flex;
+    align-content: center;
+    > .reviewedstars {
+      margin-left: 10px;
+      padding-left: 10px;
+      border-left: solid 1px lightgray;
+    }
+  }
+  > .reviewreact {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    div {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin: 0px 5px 0px 5px;
+      padding: 0px 10px 0px 10px;
+      border: solid 1px #7971ea;
+      > i {
+        font-size: 20px;
+      }
+      > p {
+        margin-left: 5px;
+      }
+    }
+    div:hover {
+      background-color: #7971ea;
+      color: white;
+    }
+    div:active {
+      background-color: #6860db;
+    }
+  }
+}
+
+.votecasted {
+  background-color: #7971ea;
+  color: white;
+}
+
+.reply {
+  color: dodgerblue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.employeereply {
+  margin-left: auto;
+  max-width: 95%;
+  padding: 20px;
+  border: solid 1px lightgray;
+  border-right: solid 5px #7971ea;
+  border-top: none;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+}
+
+.listpagination {
+  display: flex;
+  justify-content: space-between;
+  > .pagefront {
+    text-align: start;
+    padding-right: 10px;
+    border-right: solid 1px lightgray;
+  }
+
+  > .pageend {
+    text-align: end;
+    padding-left: 10px;
+    border-left: solid 1px lightgray;
+  }
+
+  label {
+    height: 30px;
+  }
+
+  label,
+  li {
+    cursor: pointer;
+  }
+
+  label:hover {
+    background-color: lightgray;
+  }
+
+  label:active {
+    background-color: gray;
+  }
+
+  li:hover {
+    background-color: #7971ea;
+    color: white;
+  }
+
+  li:active {
+    background-color: #6860db;
+  }
+
+  > .pagepicker {
+    flex: 3;
+    display: flex;
+    overflow-x: auto;
+    > ul {
+      flex: 4;
+      width: 100%;
+      list-style: none;
+      display: flex;
+    }
+
+    :nth-child(1) {
+      justify-content: end;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input {
+      width: fit-content;
+      max-width: 40px;
+      margin: 0px 5px 0px 5px;
+      border: none;
+      border: solid 2px #7971ea;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    ul,
+    li {
+      margin: 0px;
+      padding: 0px;
+      align-items: center;
+    }
+
+    li {
+      height: 30px;
+      align-content: center;
+      border-radius: 5px;
+      padding: 0px 10px 0px 10px;
+    }
+  }
+
+  i {
+    font-size: 30px;
+  }
+}
+
+.ratedannounce {
+  background-color: #7971ea;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.pointrating {
+  margin-bottom: 10px;
+  margin: 0px 5px 10px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > p {
+    margin-bottom: 0px;
+  }
+}
+.reviewcomment {
+  > textarea {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    border: none;
+    border-bottom: solid 1px lightgray;
+    padding: 5px;
+  }
+  margin-bottom: 5px;
+}
+.action {
+  display: flex;
+  justify-content: space-between;
+  > label {
+    > input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+}
+.bx-eraser,
+.bxs-send {
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+}
+.bxs-send {
+  border-radius: 5px;
+  border: solid 1px #7971ea;
+  padding: 5px 15px 5px 15px;
+  font-weight: bold;
+}
+.bxs-send:hover {
+  border: solid 1px #7971ea;
+  background-color: #7971ea;
+  color: white;
+}
+.bxs-send:active {
+  background-color: #6860db;
+}
+
+.thisproduct-rating {
+  display: flex;
+  padding: 10px 10px 0px 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.totalscore {
+  border-radius: 5px;
+  border: solid 2px #7971ea;
+  min-height: 110px;
+  height: 110px;
+  max-height: 110px;
+  min-width: 110px;
+  width: 110px;
+  max-width: 110px;
+  text-align: center;
+  align-content: center;
+  > .tc-background {
+    background-color: #9a94f0;
+    width: 100%;
+    height: 100%;
+  }
+  > h1 {
+    position: relative;
+    margin-bottom: 0px;
+    top: -78px;
+    color: black;
+    font-size: 40px;
+  }
+}
+.ratevisualize {
+  display: flex;
+  width: 100%;
+  padding-left: 10px;
+}
+.scorelabel,
+.votecount {
+  > p {
+    margin: 0px;
+    font-size: 15px;
+    height: 23px;
+  }
+  margin: 0px 10px 0px 0px;
+}
+.scorelabel p {
+  text-align: right;
+}
+.votecount p {
+  text-align: left;
+}
+.ratebar {
+  flex: 10;
+  align-content: center;
+  padding-top: 7px;
+}
+
+.rb-middle {
+  float: left;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.rb-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.rb-bar-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+.rb-bar {
+  background-color: #7971ea;
+  height: 8px;
+  margin: 0px 0px 10px 0px;
+}
+
+/*replyEdit*/
+.makereply {
+    margin-left: auto;
+    max-width: 95%;
+    padding: 20px;
+    border: solid 1px lightgray;
+    border-right: solid 5px gold;
+    border-top: none;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+}
+.replycomment {
+    > textarea {
+        width: 100%;
+        height: 80px;
+        resize: none;
+        border: none;
+        border-bottom: solid 1px lightgray;
+    }
+    margin-bottom: 5px;
+}
+.rpaction {
+    display: flex;
+    justify-content: space-between;
+    > label {
+        > input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+    }
+    .bx-eraser, .bxs-send, .bx-x {
+        font-size: 20px;
+        padding: 5px;
+        cursor: pointer;
+    }
+    .bxs-send {
+        border-radius: 5px;
+        border: solid 1px #7971ea;
+        padding: 5px 15px 5px 15px;
+        font-weight: bold;
+    }
+    .bxs-send:hover {
+        border: solid 1px #7971ea;
+        background-color: #7971ea;
+        color: white;
+    }
+    .bxs-send:active {
+        background-color: #6860db;
+    }
+}
+
+
+
+@media (max-width: 500px) {
+  .globalaction span {
+    display: none;
+  }
+  .employeereply {
+    max-width: 90%;
+  }
+  .reviewfooter {
+    > .timeandrate {
+      display: block;
+      > .reviewedstars {
+        margin-left: 0px;
+        padding-left: 0px;
+        border: none;
+      }
+    }
+  }
+    .reviewhistory {
+        > historyentries
+        {
+            > .historyentry {
+                > .historyentryheader {
+                    display: block;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+﻿@model BTL_LTWeb.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/LoginLayout.cshtml";
+}
+
+<form method="post" asp-controller="Account" asp-action="Login">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Tên người dùng</label>
+        <input asp-for="Email" class="form-control" aria-describedby="emailHelp" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-4">
+        <label asp-for="Password" class="form-label">Mật khẩu</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div>
+        <span class="text-danger">
+            @Html.ValidationSummary(true) <!-- Hiển thị thông báo lỗi chung -->
+        </span>
+    </div>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="form-check">
+            <input asp-for="RememberMe" class="form-check-input" type="checkbox" id="flexCheckChecked">
+            <label asp-for="RememberMe" class="form-check-label text-dark">
+                Nhớ thiết bị này
+            </label>
+        </div>
+        <a class="text-primary fw-bold" href="@Url.Action("ForgotPassword", "Account")">Quên mật khẩu</a>
+    </div>
+    <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Đăng nhập</button>
+    <div class="d-flex align-items-center justify-content-center">
+        <p class="fs-4 mb-0 fw-bold">Mới đến BeA Fashion?</p>
+        <a class="text-primary fw-bold ms-2" href="@Url.Action("Register", "Account")">Tạo tài khoản</a>
+    </div>
+</form>

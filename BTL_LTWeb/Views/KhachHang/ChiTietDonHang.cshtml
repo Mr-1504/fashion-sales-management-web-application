@@ -1,0 +1,53 @@
+﻿@model BTL_LTWeb.ViewModels.ChiTietDonHangViewModel
+@{
+    ViewData["Title"] = "Đơn hàng";
+    Layout = "~/Views/Shared/ProfileLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h2 style="font-weight: bold; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Chi tiết hóa đơn:  <span style="color: #e74c3c;">@Model.MaHoaDonBan</span></h2>
+<p style="font-size: 1.2em; margin: 10px 0;">
+    <strong>Ngày:</strong> <span style="color: #2980b9;">@Model.NgayHoaDon</span>
+</p>
+<p style="font-size: 1.2em; margin: 10px 0;">
+    <strong>Phương thức thanh toán:</strong> <span style="color: #2980b9;">@Model.PhuongThucThanhToan</span>
+</p>
+<p style="font-size: 1.2em; margin: 10px 0;">
+    <strong>Tổng tiền:</strong> <span style="color: #e74c3c;">@Model.TongTienHd</span>
+</p>
+
+<div class="alert alert-warning">
+    <table class="table table-hover table-responsive table-fixed">
+        <thead>
+            <tr class="table-warning">
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ChiTietSanPhams)
+            {
+                <tr class="alert alert-primary">
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.TenSP)
+                    </td>
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td class="centered-cell">
+                        @Html.DisplayFor(modelItem => item.DonGia)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<a href="@Url.Action("DonHang", "KhachHang")" class="btn btn-primary">Quay lại danh sách hóa đơn</a>

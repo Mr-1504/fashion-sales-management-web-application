@@ -1,0 +1,61 @@
+@{
+    double rvCount = Model.starsCount.Sum();
+}
+
+@model BTL_LTWeb.ViewModels.ReviewStatsViewModel
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="thisproduct-rating">
+    <div class="totalscore">
+        <div class="tc-background" style="width: @(Model.score >= 0 ? double.Round(Model.score*100/5.0) : 0)%;"></div>
+        <h1>@(Model.score >= 0 ? Model.score : 0)</h1>
+    </div>
+    <div class="ratevisualize">
+        <div class="scorelabel">
+            <p>✦✦✦✦✦</p>
+            <p>✦✦✦✦</p>
+            <p>✦✦✦</p>
+            <p>✦✦</p>
+            <p>✦</p>
+        </div>
+        <div class="votecount">
+            <p>@Model.starsCount[4]</p>
+            <p>@Model.starsCount[3]</p>
+            <p>@Model.starsCount[2]</p>
+            <p>@Model.starsCount[1]</p>
+            <p>@Model.starsCount[0]</p>
+        </div>
+        <div class="ratebar">
+            <!-- scoreboard của w3school -->
+            <div class="rb-row">
+                <div class="rb-middle">
+                    <div class="rb-bar-container">
+                        <div class="rb-bar rb-bar-5" style="width: @(rvCount > 0 ? double.Round(Model.starsCount[4]*100/rvCount) : 0)%"></div>
+                    </div>
+                </div>
+                <div class="rb-middle">
+                    <div class="rb-bar-container">
+                        <div class="rb-bar rb-bar-4" style="width: @(rvCount > 0 ? double.Round(Model.starsCount[3]*100/rvCount) : 0)%"></div>
+                    </div>
+                </div>
+                <div class="rb-middle">
+                    <div class="rb-bar-container">
+                        <div class="rb-bar rb-bar-3" style="width: @(rvCount > 0 ? double.Round(Model.starsCount[2]*100/rvCount) : 0)%"></div>
+                    </div>
+                </div>
+                <div class="rb-middle">
+                    <div class="rb-bar-container">
+                        <div class="rb-bar rb-bar-2" style="width: @(rvCount > 0 ? double.Round(Model.starsCount[1]*100/rvCount) : 0)%"></div>
+                    </div>
+                </div>
+                <div class="rb-middle">
+                    <div class="rb-bar-container">
+                        <div class="rb-bar rb-bar-1" style="width: @(rvCount > 0 ? double.Round(Model.starsCount[0]*100/rvCount) : 0)%"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- scoreboard end -->
+        </div>
+    </div>
+</div>

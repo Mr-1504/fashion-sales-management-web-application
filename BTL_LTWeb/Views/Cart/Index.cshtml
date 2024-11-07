@@ -1,0 +1,66 @@
+﻿@model List<BTL_LTWeb.Models.TGioHang>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_CartLayout.cshtml";
+    var customerId = -1;
+    if(Model.Count > 0)
+         customerId = Model[0].MaKhachHang;
+}
+<form class="col-md-12" asp-action="ProceedToCheckout" asp-controller="Pay" method="post">
+<div id="cart-container">
+    
+    @if (Model.Count < 1)
+    {
+        <h2>Không có sản phẩm nào trong giỏ hàng</h2>
+    }
+    else
+    {
+        <div class="row mb-5">
+            <form class="col-md-12">
+                <div class="site-blocks-table">
+                    @await Html.PartialAsync("_ListCart", Model)
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <a class="btn btn-outline-primary btn-sm btn-block" asp-action="Index" asp-controller="Home">Tiếp tục mua hàng</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Tổng tiền</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Phải thanh toán</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong id="total" class="text-black total-amount">0</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+</div>
+</form>
+@section Scripts {
+    <script src="~/js/cart.js"></script>
+}

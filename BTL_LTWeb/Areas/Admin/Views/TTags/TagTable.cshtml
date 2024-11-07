@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TTag>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr class="table-warning">
+            <th class="text-nowrap">
+                Tên Bộ sưu tập
+            </th>
+            <th class="text-nowrap">
+                Ảnh
+            </th>
+            <th class="text-nowrap">
+                Chức năng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="alert alert-primary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TagName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TagImage)
+                </td>
+                <td class=" text-nowrap">
+                    <a asp-action="Edit" asp-route-Tagid="@item.TagId">Sửa</a> |
+                    <a asp-action="Details" asp-route-Tagid="@item.TagId">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-Tagid="@item.TagId">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TDanhMucSp>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @{
+        var logMessage = TempData["Log"] as string;
+        if (!string.IsNullOrEmpty(logMessage))
+        {
+            <div class="alert alert-success">
+                @logMessage
+            </div>
+        }
+    }
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr class="table-warning">
+                    <th class="text-nowrap">
+                        Tên Sản Phẩm
+                    </th>
+                    <th class="text-nowrap">
+                        Chất liệu
+                    </th>
+                    <th class="text-nowrap">
+                        Loại
+                    </th>
+                    <th class="text-nowrap">
+                        Hãng sản xuất
+                    </th>
+                    <th class="text-nowrap">
+                        Thời gian bảo hành
+                    </th>
+                    <th class="text-nowrap">
+                        Giới thiệu
+                    </th>
+                    <th class="text-nowrap">
+                        Giá
+                    </th>
+                    <th class="text-nowrap">
+                        Chức năng
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="alert alert-primary">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenSp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChatLieu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LoaiDt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HangSx)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThoiGianBaoHanh)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GioiThieuSp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gia)
+                        </td>
+                        <td class=" text-nowrap">
+                            <a asp-action="suasanpham" asp-route-MaSP="@item.MaSp">Sửa</a> |
+                            <a asp-action="Chitiet" asp-route-MaSP="@item.MaSp">Chi tiết</a> |
+                            <a asp-action="XoaSanPham" asp-route-MaSP="@item.MaSp">Xoá</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+<ul class="pagination">
+    @for (int i = 1; i <= ViewBag.pageNum; i++)
+    {
+        <li class="page-item" data-page="@i" data-keyword="@ViewBag.keyword">
+            <a class="page-link" href="#">@i</a>
+        </li>
+    }
+</ul>

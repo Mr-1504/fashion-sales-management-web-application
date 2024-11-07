@@ -1,0 +1,47 @@
+﻿@model BTL_LTWeb.Models.TTag
+
+@{
+    ViewData["Title"] = "Thêm Bộ sưu tập";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Thêm</h1>
+
+<h4>Bộ sưu tập</h4>
+<hr />
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="p-3 p-lg-5 border">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="form-group row mt-3">
+            <div class="col-md-6">
+                <label asp-for="TagName" class="control-label"></label>
+                <input asp-for="TagName" class="form-control" />
+                <span asp-validation-for="TagName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="TagImage" class="control-label"></label>
+                <input asp-for="TagImage" class="form-control" readonly="readonly" />
+                <span asp-validation-for="TagImage" class="text-danger"></span>
+            </div>
+            <div class="form-group row mt-3">
+                <div class="col-md-12">
+                    <label for="file">Chọn ảnh:</label>
+                    <input type="file" name="file" class="form-control" />
+                </div>
+                <span asp-validation-for="TagImage" class="text-danger"></span>
+            </div>
+            <div class="form-group row mt-3">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Thêm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="col-lg-12">
+    <a class="btn btn-primary" asp-action="Index">Quay về danh sách</a>
+</div>
+
+

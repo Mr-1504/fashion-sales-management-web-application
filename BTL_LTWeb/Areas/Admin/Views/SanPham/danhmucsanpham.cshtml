@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "danhmucsanpham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<BTL_LTWeb.Models.TDanhMucSp>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="row">
+    <h1>Danh Mục Sản Phẩm</h1>
+
+    <form class="site-block-top-search d-flex">
+        <div class="input-group">
+            <input id="keyword" class="form-control" name="keyword" type="text" placeholder="Tìm">
+            <button id="btnSearch" class="btn btn-primary" type="button">Tìm</button>
+        </div>
+    </form>
+    <p></p>
+    <div class="alert alert-warning">
+        <div id="content">
+            @await Html.PartialAsync("BangSanPham", Model)
+        </div>
+    </div>
+
+    <a class="btn btn-info" asp-action="ThemSanPham">Thêm Sản Phẩm</a>
+</div>
+@section Scripts {
+    <script>
+        $('body').on('click', 'li.page-item', function (e) {
+            e.preventDefault();
+            var page = $(this).data("page");
+            var keyword = $("#keyword").val();
+            $.ajax({
+                url: "/Admin/SanPham/LocSanPham",
+                data: { keyword: keyword, pageIndex: page },
+                success: function (response) {
+                    $("div#content").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $("button#btnSearch").click(function (e) {
+            var keyword = $("#keyword").val();
+            var data = { keyword: keyword };
+
+            $.ajax({
+                url: "/Admin/SanPham/LocSanPham",
+                data: data,
+                success: function (response) {
+                    $("div#content").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Có lỗi xảy ra:", error);
+                }
+            });
+        });
+
+        $('body').on('click', '.btn-delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+            if (confirm("Bạn có chắc chắn muốn xóa cửa hàng này không?")) {
+                $.ajax({
+                    url: "/Admin/SanPham/Delete",
+                    type: "POST",
+                    data: { id: id },
+                    success: function () {
+                        alert("Đã xóa thành công!");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Có lỗi xảy ra khi xóa.");
+                    }
+                });
+            }
+        });
+    </script>
+}
+

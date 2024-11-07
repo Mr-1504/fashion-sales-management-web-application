@@ -1,0 +1,132 @@
+﻿@model BTL_LTWeb.Models.TDanhSachCuaHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Sửa Cửa Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa Danh Sách Cửa Hàng</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="SDTCuaHang" class="control-label"></label>
+                <input type="hidden" asp-for="SDTCuaHang" class="form-control" />
+                <span asp-validation-for="SDTCuaHang" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label"></label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="c_country" class="text-black form-label">Thành Phố(Tỉnh)<span class="text-danger">*</span></label>
+                <select id="c_diff_country" class="form-control" onchange="updateProvinceName()">
+                    <option value="">Chọn Thành Phố(Tỉnh)</option>
+                </select>
+            </div>
+            <input type="hidden" class="text-black form-label" id="ten_thanh_pho" name="ThanhPhoKhac">
+            <div class="form-group">
+                <label for="c_district" class="text-black">Quận (Huyện)<span class="text-danger">*</span></label>
+                <select id="c_diff_district" class="form-control" onchange="updateDistrictName()">
+                    <option value="">Chọn Quận (Huyện)</option>
+                </select>
+            </div>
+            <input type="hidden" class="form-control" id="ten_quan_huyen" name="QuanHuyenKhac">
+            <div class="form-group row mt-3">
+                <div class="col-md-12">
+                    <label asp-for="KhuVuc" class="text-black form-label">Khu vực<span asp-validation-for="KhuVuc" class="text-danger">*</span></label>
+                    <input type="text" asp-for="KhuVuc" id="KhuVuc" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KinhDo" class="control-label">Kinh Độ</label>
+                <input asp-for="KinhDo" class="form-control" />
+                <span asp-validation-for="KinhDo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViDo" class="control-label">Vĩ Độ</label>
+                <input asp-for="ViDo" class="form-control" />
+                <span asp-validation-for="ViDo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Cập nhật">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    <script>
+        function loadProvinces(selectId, districtSelectId) {
+            fetch('https://provinces.open-api.vn/api/p/')
+                .then(response => response.json())
+                .then(data => {
+                    let provinceSelect = document.getElementById(selectId);
+                    data.forEach(province => {
+                        let option = document.createElement('option');
+                        option.value = province.code;
+                        option.textContent = province.name;
+                        provinceSelect.appendChild(option);
+                    });
+
+                    provinceSelect.addEventListener('change', function () {
+                        loadDistricts(provinceSelect.value, districtSelectId);
+                        updateKhuVuc();
+                    });
+                });
+        }
+
+        function loadDistricts(provinceCode, districtSelectId) {
+            fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    let districtSelect = document.getElementById(districtSelectId);
+                    districtSelect.innerHTML = '';
+                    data.districts.forEach(district => {
+                        let option = document.createElement('option');
+                        option.value = district.code;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
+                    });
+
+                    districtSelect.addEventListener('change', updateKhuVuc);
+                });
+        }
+        loadProvinces('c_diff_country', 'c_diff_district');
+        function updateProvinceName() {
+            const provinceSelect = document.getElementById('c_diff_country');
+            const provinceName = provinceSelect.options[provinceSelect.selectedIndex].text;
+            document.getElementById('ten_thanh_pho').value = provinceName;
+            updateKhuVuc();
+        }
+
+        function updateDistrictName() {
+            const districtSelect = document.getElementById('c_diff_district');
+            const districtName = districtSelect.options[districtSelect.selectedIndex].text;
+            document.getElementById('ten_quan_huyen').value = districtName;
+            updateKhuVuc();
+        }
+
+        function updateKhuVuc() {
+            const provinceName = document.getElementById('ten_thanh_pho').value;
+            const districtName = document.getElementById('ten_quan_huyen').value;
+            const khuVucInput = document.getElementById('KhuVuc');
+            if (khuVucInput) {
+                khuVucInput.value = districtName + ", " + provinceName;
+            }
+        }
+        loadProvinces('c_diff_country', 'c_diff_district');
+
+
+    </script>
+
+}

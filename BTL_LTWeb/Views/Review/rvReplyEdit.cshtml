@@ -1,0 +1,53 @@
+@{
+}
+
+@model TDanhGia
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<form asp-controller="Review" asp-action="AlterReply" method="post" id="replyForm_@ViewBag.rid">
+    <div class="makereply">
+        <input type="hidden" name="MaDanhGia" value="@ViewBag.rid"></input>
+        <div class="replycomment">
+            <textarea asp-for="TraLoi" class="comment-text" placeholder="Trả lời @ViewBag.rid" id="@ViewBag.rid">
+                @if (!string.IsNullOrEmpty(Model.TraLoi))
+                {
+                    @foreach(string s in Model.TraLoi.Split("\n"))
+                    {
+                        @s<br>
+                    }
+                }
+            </textarea>
+        </div>
+        <div class="rpaction">
+            <label class="clear" id="replyedit_@ViewBag.rid"><i class='bx bx-eraser'></i></label>
+            <label class="cancel" id="replyedit_@ViewBag.rid"><i class='bx bx-x'></i></label>
+            <label><input type="submit"><i class='bx bxs-send'></i></input></label>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("label.clear[id='replyedit_" + @ViewBag.rid + "']").click(function (e) {
+        $("textarea[id='" + @ViewBag.rid + "']").val('');
+    });
+    $("label.cancel[id='replyedit_" + @ViewBag.rid + "']").click(function (e) {
+        $("div.makingreply[id='" + @ViewBag.rid + "']").hide();
+        $("#reply_" + @ViewBag.rid).show();
+    });
+    //do the reply ajax form
+    $("#replyForm_" + @ViewBag.rid).submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AlterReply", "Review")',
+            data: $(this).serialize() + "&pid=" + '@ViewBag.pid',
+            success: function (response) {
+                alertResult(response);
+                if (response == "SACT") {
+                    ajaxList();
+                }
+            }
+        });
+    });
+</script>

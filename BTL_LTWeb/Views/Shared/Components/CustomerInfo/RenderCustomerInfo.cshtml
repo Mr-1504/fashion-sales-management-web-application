@@ -1,0 +1,17 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="author-card pb-3">
+    <div class="author-card-cover" style="background-image: url(https://bootdey.com/img/Content/flores-amarillas-wallpaper.jpeg);">
+        <a class="btn btn-style-1 btn-white btn-sm" href="#" data-toggle="tooltip" title="You currently have @Model._points Reward points to spend">
+            <i class="fa fa-award text-md"></i>&nbsp;@Model._points điểm
+        </a>
+    </div>
+    <div class="author-card-profile">
+        <div class="author-card-avatar">
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="@Model._fullName">
+        </div>
+        <div class="author-card-details">
+            <h5 class="author-card-name text-lg">@Model._fullName</h5>
+            <span class="author-card-position">@Model._userName</span>
+        </div>
+    </div>
+</div>

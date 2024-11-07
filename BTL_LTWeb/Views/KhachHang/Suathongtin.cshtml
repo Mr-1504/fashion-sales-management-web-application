@@ -1,0 +1,74 @@
+﻿@model BTL_LTWeb.Models.TKhachHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Suathongtin";
+    Layout = "~/Views/Shared/ProfileLayout.cshtml";
+}
+
+@await Html.PartialAsync("_suaPartial", Model)
+
+<script>
+    $(document).ready(function () {
+        const originData = {
+            TenKhachHang: $('#TenKhachHang').val(),
+            Email: $('#Email').val(),
+            NgaySinh: $('#NgaySinh').val(),
+            SoDienThoai: $('#SoDienThoai').val(),
+            DiaChi: $('#DiaChi').val()
+        };
+
+        function restoreData() {
+            $('#TenKhachHang').val(originData.TenKhachHang);
+            $('#Email').val(originData.Email);
+            $('#NgaySinh').val(originData.NgaySinh);
+            $('#SoDienThoai').val(originData.SoDienThoai);
+            $('#DiaChi').val(originData.DiaChi);
+        }
+        $('#save-button').on('click', function (e) {+
+            e.preventDefault();
+            
+            var formData = $('#updateForm').serialize();
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Suathongtin", "KhachHang")',
+                data: formData,
+                success: function (response) {
+                    let notification = $('#notification');
+                    if (response.success) {
+                        notification.text("Cập nhật thành công!").css({
+                            "color": "green",
+                            "display": "block",
+                            "background-color": "#e6ffe6",
+                            "border": "1px solid green"
+                        });
+                        Object.keys(originData).forEach(key => {
+                            originData[key] = $('#' + key).val();
+                        });
+                    } else {
+                        notification.text(response.message || "Có lỗi xảy ra!").css({
+                            "color": "red",
+                            "display": "block",
+                            "background-color": "#ffe6e6",
+                            "border": "1px solid red"
+                        });
+                        restoreData();
+                    }
+                    setTimeout(function () {
+                        notification.hide();
+                    }, 3000);
+                },
+                error: function () {
+                    $('#notification').text("Có lỗi xảy ra, vui lòng thử lại!").css({
+                        "color": "red",
+                        "display": "block",
+                        "background-color": "#ffe6e6",
+                        "border": "1px solid red"
+                    });
+                    restoreData();
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,22 @@
+﻿@model List<string>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    @if (@ViewBag.Loai == null)
+    {
+        <span>Tất cả</span>
+    }
+    else
+    {
+        <span>@ViewBag.Loai</span>
+    }
+</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+    @foreach (var m in Model)
+    {
+    <a class="dropdown-item" asp-controller="Home" asp-action="Sanphamtheoloai" asp-route-Loai="@m">
+        <span>@m</span>
+    </a>
+    }
+</div>

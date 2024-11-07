@@ -1,0 +1,220 @@
+﻿@model IEnumerable<BTL_LTWeb.Models.TMaGiamGia>
+@{
+    ViewData["Title"] = "Mã giảm giá";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row">
+    <h1>Danh Sách Mã Giảm Giá</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="success-message" class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    <p>
+        <a class="btn btn-info" asp-controller="GiamGia" asp-action="ThemMaGiamGia">Thêm mã giảm giá</a>
+    </p>
+    <!-- Search Form -->
+    <form class="site-block-top-search d-flex">
+        <div class="input-group">
+            <input id="keyword" class="form-control" name="keyword" type="text" placeholder="Search">
+            <button id="btnSearch" class="btn btn-primary" type="button">Search</button>
+        </div>
+    </form>
+
+    <p></p>
+    <div id="notification" style="display:none; padding: 10px; margin-bottom: 20px;" class="alert alert-warning"></div>
+    <div class="alert alert-warning">
+        <div id="content">
+            @await Html.PartialAsync("DiscountTable", Model)
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            if ($('#success-message').length) {
+                setTimeout(function () {
+                    $('#success-message').fadeOut('slow'); 
+                }, 3000); 
+            }
+            let debounceTimeout;
+            $("#keyword").on('input', function () {
+                clearTimeout(debounceTimeout);
+                var keyword = $(this).val();
+                debounceTimeout = setTimeout(function () {
+                    $.ajax({
+                        url: "/Admin/GiamGia/DiscountFilter",
+                        data: { keyword: keyword },
+                        success: function (response) {
+                            console.log("Response từ server:", response);
+                            if (response.success === false) {
+                                $("div#content").html("");
+                                $("#notification").html(response.message).show().css({
+                                    "color": "red",
+                                    "background-color": "#ffe6e6",
+                                    "border": "1px solid red",
+                                    "display": "block"
+                                });
+                            } else {
+                                $("div#content").html(response);
+                                $("#notification").hide();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Có lỗi xảy ra:", error);
+                        }
+                    });
+                }, 1000);
+            });
+
+            $("#keyword").keypress(function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    var keyword = $(this).val();
+                    $.ajax({
+                        url: "/Admin/GiamGia/DiscountFilter",
+                        data: { keyword: keyword },
+                        success: function (response) {
+                            console.log("Response từ server:", response);
+                            if (response.success === false) {
+                                $("div#content").html("");
+                                $("#notification").html(response.message).show().css({
+                                    "color": "red",
+                                    "background-color": "#ffe6e6",
+                                    "border": "1px solid red",
+                                    "display": "block"
+                                });
+                            } else {
+                                $("div#content").html(response);
+                                $("#notification").hide();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Có lỗi xảy ra:", error);
+                        }
+                    });
+                }
+            });
+
+            $("button#btnSearch").click(function () {
+                var keyword = $("#keyword").val();
+                $.ajax({
+                    url: "/Admin/GiamGia/DiscountFilter",
+                    data: { keyword: keyword },
+                    success: function (response) {
+                        console.log("Response từ server:", response);
+                        if (response.success === false) {
+                            $("div#content").html("");
+                            $("#notification").html(response.message).show().css({
+                                "color": "red",
+                                "background-color": "#ffe6e6",
+                                "border": "1px solid red",
+                                "display": "block"
+                            });
+                        } else {
+                            $("div#content").html(response);
+                            $("#notification").hide();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Có lỗi xảy ra:", error);
+                    }
+                });
+            });
+            $('body').on('click', 'li.page-item', function (e) {
+                e.preventDefault();
+                var page = $(this).data("page");
+                var keyword = $("#keyword").val();
+                $.ajax({
+                    url: "/Admin/GiamGia/DiscountFilter",
+                    data: { keyword: keyword, pageIndex: page },
+                    success: function (response) {
+                        $("div#content").html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Có lỗi xảy ra:", error);
+                    }
+                });
+            });
+            $(document).on('click', '.btn-detail', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                window.location.href = '@Url.Action("ChiTietMaGiamGia", "GiamGia")' + '?MaGiamGia=' + id;
+            });
+            $(document).on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                if (confirm("Bạn có chắc chắn muốn xóa mã giảm giá này không?")) {
+                    $.ajax({
+                        url: '@Url.Action("XoaMaGiamGia", "GiamGia")',
+                        type: 'POST',
+                        data: { MaGiamGia: id },
+                        success: function (result) {
+                            console.log("Response từ server:", result);
+                            let notification = $('#notification');
+                            if (result.success) {
+                                notification.text("Xóa mã giảm giá thành công!").css({
+                                    "color": "green",
+                                    "display": "block",
+                                    "background-color": "#e6ffe6",
+                                    "border": "1px solid green"
+                                });
+                                
+                                $('#content').load('@Url.Action("DiscountFilter", "GiamGia")');
+                            } else {
+                                notification.text("Lỗi: " + result.message).css({
+                                    "color": "red",
+                                    "display": "block",
+                                    "background-color": "#ffe6e6",
+                                    "border": "1px solid red"
+                                });
+                            }
+                            setTimeout(function () {
+                                notification.hide();
+                            }, 3000);
+                        },
+                        error: function () {
+                            $('#notification').text("Có lỗi xảy ra khi xóa mã giảm giá.").css({
+                                "color": "red",
+                                "display": "block",
+                                "background-color": "#ffe6e6",
+                                "border": "1px solid red"
+                            });
+                            setTimeout(function () {
+                                notification.hide();
+                            }, 3000);
+                        }
+                    });
+                }
+            });
+            $(document).on('click', '.btn-sendEmail', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                if (confirm("Bạn có chắc chắn muốn gửi mã giảm giá này qua email không?")) {
+                    $.ajax({
+                        url: '@Url.Action("GuiMaGiamGia", "GiamGia")',
+                        type: 'POST',
+                        data: { MaGiamGia: id },
+                        success: function (result) {
+                            console.log("Response từ server:", result);
+                            let notification = $('#notification');
+                            if (result.success) {
+                                $('#success-message').text("Gửi mã giảm giá qua email thành công!").show();
+                                setTimeout(function () {
+                                    $('#success-message').fadeOut('slow');
+                                }, 3000);
+                            } else {
+                                alert("Lỗi: " + result.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Có lỗi xảy ra khi gửi mã giảm giá qua email.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+﻿@model BTL_LTWeb.Models.TDanhMucSp
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+    <div class="block-4 text-center border">
+        <figure class="block-4-image">
+            <a asp-controller="Home" asp-action="ChitietSpNew" asp-route-MaSp="@Model.MaSp"><img src="~/images/@($"{Model.AnhDaiDien}")" alt="Image placeholder" class="img-fluid"></a>
+        </figure>
+        <div class="block-4-text p-4">
+            <h3><a asp-controller="Home" asp-action="ChitietSpNew" asp-route-MaSp="@Model.MaSp">@Model.TenSp</a></h3>
+           
+            <p class="text-primary font-weight-bold">$@Model.Gia</p>
+        </div>
+    </div>
+</div>

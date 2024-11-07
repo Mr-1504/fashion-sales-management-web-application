@@ -1,0 +1,38 @@
+@{
+}
+
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+<div class="dltconfirmform">
+    <p>Bạn xác nhận muốn xoá đánh giá này?</p>
+    <div class="dltaction">
+        <form asp-action="DeleteReviewConfirm" method="post" id="rvdeleteform_@ViewBag.rid" style="display:inline">
+            <input type="hidden" name="rid" value="@ViewBag.rid" />
+            <label><input type="submit" style="opacity: 0%; position: absolute; width: 0; height: 0;"><i class='bx bx-check dltyes' ></i></input></label>
+        </form>
+        <label id="cancel_@ViewBag.rid"><i class='bx bx-x dltno'></i></label>
+    </div>
+</div>
+
+<script>
+    $("#cancel_" + @ViewBag.rid).click(function (e) {
+        $("#review_" + @ViewBag.rid).show();
+        $(".deleteconfirm[id='" + @ViewBag.rid + "']").hide();
+    });
+    $("#rvdeleteform_" + @ViewBag.rid).submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeleteReviewConfirm", "Review")',
+            data: $(this).serialize() + "&pid=" + '@ViewBag.pid',
+            success: function (response) {
+                alertResult(response);
+                if (response == "SACT") {
+                    ajaxList();
+                    ajaxStats();
+                    ajaxMaker();
+                }
+            }
+        });
+    });
+</script>

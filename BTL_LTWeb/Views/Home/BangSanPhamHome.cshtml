@@ -1,0 +1,8 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<TDanhMucSp>
+<div class="row mb-5" id="content">
+@foreach (var m in Model)
+{
+    @await Html.PartialAsync("_ProductPartial", m)
+}
+</div>

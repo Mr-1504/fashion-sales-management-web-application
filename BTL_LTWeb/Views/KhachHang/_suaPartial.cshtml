@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BTL_LTWeb.Models.TKhachHang
+
+<div id="notification" style="display:none; padding: 10px; margin-bottom: 20px;"></div>
+
+<form class="row" id="updateForm" asp-controller="KhachHang" asp-action="Index" asp-route-id="@Model.MaKhachHang" method="post">
+    <input type="hidden" asp-for="MaKhachHang" />
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="TenKhachHang" class="text-black form-label">Tên khách hàng</label>
+            <input class="form-control" asp-for="TenKhachHang" required="">
+            <span asp-validation-for="TenKhachHang" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Email" class="text-black form-label">Email</label>
+            <input class="form-control" asp-for="Email" required="">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="NgaySinh" class="text-black form-label">Ngày sinh</label>
+            <input class="form-control" asp-for="NgaySinh" required="">
+            <span asp-validation-for="NgaySinh" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="SoDienThoai" class="text-black form-label">Số điện thoại</label>
+            <input class="form-control" asp-for="SoDienThoai" required="">
+            <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="DiaChi" class="text-black form-label">Địa chỉ</label>
+            <input class="form-control" asp-for="DiaChi" required="">
+            <span asp-validation-for="DiaChi" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <hr class="mt-2 mb-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <a href="#" class="btn btn-style-1 btn-primary" id="save-button">Lưu</a>
+        </div>
+    </div>
+</form>
