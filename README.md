@@ -13,13 +13,28 @@ This repository contains a web application designed for managing fashion sales e
     - Register
     ![Register](./demo/register.png)
 - **Shopping Cart:** Add, remove, and view products.
+    ![Cart](./demo/cart.png)
 - **Product Reviews:** Users can leave reviews for products.
+    ![Reviews](./demo/Product%20Review.png)
 - **Payment System:** Supports both online payment and cash on delivery.
+    ![Payment](./demo/payment.png)
+    ![pay](./demo/pay.png)
 - **Role-based Access:** Three roles: customer, employee, and admin.
+    - Customer
+    ![Customer](./demo/home%20for%20customer.png)
+    ![detail](./demo/product%20detail.png)
+    - Admin
+    ![Admin](./demo/admin.png)
 - **Product Management**: Add, update, delete, and view product details.
+    - Add, update
+    ![add, update](./demo/add.png)
+    - View product details
+    ![detail](./demo/detail.png)
 - **Customer Management**: Manage customer profiles and purchase histories.
+    ![customer](./demo/cus.png)
 - **Order Management**: Create, update, and track orders, including payment statuses.
-- **Reporting**: Generate detailed sales reports for business insights.
+    ![list](./demo/invoice%20list.png)
+    ![invoice](./demo/invoice%20detail.png)
 - **Role-Based Access Control**: Different permissions for Admin and Employees.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 
@@ -50,7 +65,7 @@ This repository contains a web application designed for managing fashion sales e
 
 ## Usage
 
-1. Open a web browser and navigate to `http://localhost:5000`.
+1. Open a web browser.
 2. Log in using Admin or Employee credentials.
 3. Use the dashboard to manage products, customers, and orders.
 4. Generate reports for sales analysis.
