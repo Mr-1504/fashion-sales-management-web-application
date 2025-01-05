@@ -1,4 +1,4 @@
-# Fashion Sales Management Website App
+# Fashion Sales Management Web Application
 
 This repository contains a web application designed for managing fashion sales efficiently. It offers tools to handle products, customers, orders, and other essential business operations, making it suitable for small to medium-sized fashion retail businesses.
 
